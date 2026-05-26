@@ -1,0 +1,24 @@
+# Environment variables
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# SQLite
+*.db
+*.sqlite3
+
+# Uploads
+uploads/
+!uploads/.gitkeep
+
+# IDEs
+.idea/
+.vscode/

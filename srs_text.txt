@@ -1,0 +1,4136 @@
+ 
+  SOFTW ARE REQUIREMENT S SPECIFICA TION
+ 
+ 
+for the 
+ MATA – Multimodal Accessible
+ 
+Textbook Assistant
+ 
+(Mobile Application)
+ 
+ 
+AI-Powered
+ 
+·
+ 
+Camera-First
+ 
+·
+ 
+Offline-Ready
+ 
+·
+ 
+Accessibility-Focused 
+ 
+ 
+ 
+Prepared in conformance with IEEE Std 830-1998 
+IEEE
+ 
+Recommended
+ 
+Practice
+ 
+for
+ 
+Software
+ 
+Requirements
+ 
+Specifications 
+ 
+ 
+ 
+Prepared by: 
+ 
+Student Name Exam Seat No. Role 
+Ruturaj Kasture 202301040275 Team Lead / AI Pipeline 
+Maitreyee Majumdar 202301040277 Backend / LLM Integration 
+Kanishka Amrutkar 202301040244 Mobile App / UI 
+Amisha Singh 202301100041 OCR / Vision Module 
+ 
+Project Guide: Mrs. Neha Hajare 
+Project
+ 
+Coordinator:
+ 
+Dr.
+ 
+Kanchan
+ 
+Dhote
+ 
+|
+ 
+HoD:
+ 
+Dr.
+ 
+Pramod
+ 
+Ganjewar 
+ 
+Department of Computer Engineering 
+MIT Academy of Engineering, Alandi (D), Pune – 412105 
+(Affiliated
+ 
+to
+ 
+Savitribai
+ 
+Phule
+ 
+Pune
+ 
+University) 
+ 
+Document Version: 2.0 (Application Edition) | April 2026 
+ 
+  
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Revision History
+ 
+ 
+Version Date Author(s) Change Description 
+1.0 Dec 2025 All Members Initial SRS – Web-based system 
+2.0 Apr 2026 All Members Revised SRS – Converted to Mobile Application with new market features 
+2.1 TBD Dev Team Post-Sem 2 updates after implementation 
+3.0 TBD Dev Team Final SRS after Sem 3 deployment 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 3 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+1.  Introduction 
+1.1  Purpose 
+This Software Requirements Specification (SRS) document defines the complete functional and 
+non-functional
+ 
+requirements
+ 
+for
+ 
+MATA
+ 
+(Multimodal
+ 
+Accessible
+ 
+Textbook
+ 
+Assistant)
+ 
+—
+ 
+a
+ 
+native
+ 
+mobile
+ 
+application
+ 
+targeting
+ 
+Android
+ 
+and
+ 
+iOS
+ 
+platforms.
+ 
+This
+ 
+version
+ 
+supersedes
+ 
+the
+ 
+earlier
+ 
+web-based
+ 
+SRS
+ 
+(v1.0)
+ 
+and
+ 
+incorporates
+ 
+the
+ 
+paradigm
+ 
+shift
+ 
+from
+ 
+a
+ 
+browser-hosted
+ 
+system
+ 
+to
+ 
+a
+ 
+camera-first,
+ 
+device-native
+ 
+mobile
+ 
+application.
+ 
+MATA is an AI-powered educational accessibility tool that allows students to point their phone camera at 
+any
+ 
+textbook
+ 
+page
+ 
+—
+ 
+or
+ 
+upload
+ 
+an
+ 
+image/PDF
+ 
+—
+ 
+and
+ 
+instantly
+ 
+receive
+ 
+a
+ 
+spoken,
+ 
+age-adapted
+ 
+explanation
+ 
+of
+ 
+all
+ 
+content
+ 
+including
+ 
+text,
+ 
+diagrams,
+ 
+charts,
+ 
+mathematical
+ 
+expressions,
+ 
+and
+ 
+structured
+ 
+layouts.
+ 
+The
+ 
+application
+ 
+is
+ 
+designed
+ 
+to
+ 
+serve
+ 
+visually
+ 
+impaired
+ 
+students,
+ 
+young
+ 
+learners
+ 
+(ages
+ 
+8–16),
+ 
+and
+ 
+anyone
+ 
+who
+ 
+benefits
+ 
+from
+ 
+audio-based
+ 
+learning.
+ 
+This document is prepared in conformance with IEEE Std 830-1998 and is intended for: the development 
+team,
+ 
+project
+ 
+guide
+ 
+(Mrs.
+ 
+Neha
+ 
+Hajare),
+ 
+project
+ 
+coordinator
+ 
+(Dr.
+ 
+Kanchan
+ 
+Dhote),
+ 
+external
+ 
+evaluators,
+ 
+and
+ 
+future
+ 
+maintainers.
+ 
+ 
+1.2  Document Conventions 
+Convention Meaning 
+SHALL Mandatory requirement – must be implemented. 
+SHOULD Recommended – strongly desired but not mandatory in MVP. 
+MAY Optional – implement if time/resources allow. 
+FR-XX Functional Requirement identifier (e.g., FR-01). 
+NFR-XX Non-Functional Requirement identifier. 
+UC-XX Use Case identifier. 
+MVP Minimum Viable Product – core features for Semester 2 demo. 
+[APP] Requirement specific to mobile app context (replaces web equivalent). 
+ 
+1.3  Intended Audience 
+Audience Relevant Sections 
+Development Team All sections, especially §3 (Functional Req.) and §4 (App Architecture) 
+Project Guide / Coordinator §1, §2, §3, §5, §6 
+External Examiners §1, §2, §3.1–§3.3, §6 
+Future Maintainers §3, §4, §5, Appendices 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 4 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Audience Relevant Sections 
+Investors / Market Stakeholders §2, §3.1, §7 (Unique Market Features) 
+ 
+1.4  Project Scope 
+MATA — as a mobile application — provides the following core scope: 
+•
+ 
+Camera-first
+ 
+textbook
+ 
+scanning:
+ 
+Users
+ 
+open
+ 
+the
+ 
+app
+ 
+and
+ 
+point
+ 
+the
+ 
+camera
+ 
+at
+ 
+any
+ 
+textbook
+ 
+page
+ 
+for
+ 
+instant
+ 
+real-time
+ 
+capture.
+ 
+•
+ 
+Full
+ 
+multimodal
+ 
+AI
+ 
+pipeline
+ 
+running
+ 
+on-device
+ 
+(lightweight
+ 
+models)
+ 
+or
+ 
+via
+ 
+cloud
+ 
+inference
+ 
+(larger
+ 
+models):
+ 
+OCR
+ 
+→
+ 
+Layout
+ 
+Analysis
+ 
+→
+ 
+Vision
+ 
+Understanding
+ 
+→
+ 
+LLM
+ 
+Explanation
+ 
+→
+ 
+TTS
+ 
+Output.
+ 
+•
+ 
+Three
+ 
+explanation
+ 
+modes:
+ 
+Child
+ 
+(8–12),
+ 
+Teen
+ 
+(13–16),
+ 
+Adult/Standard.
+ 
+•
+ 
+Audio
+ 
+playback
+ 
+of
+ 
+explanations
+ 
+with
+ 
+play/pause/speed
+ 
+controls.
+ 
+•
+ 
+Interactive
+ 
+Q&A:
+ 
+users
+ 
+type
+ 
+or
+ 
+voice-input
+ 
+follow-up
+ 
+questions.
+ 
+•
+ 
+Offline-capable
+ 
+MVP:
+ 
+Core
+ 
+OCR
+ 
+and
+ 
+TTS
+ 
+to
+ 
+work
+ 
+without
+ 
+internet;
+ 
+LLM
+ 
+via
+ 
+cloud
+ 
+API
+ 
+with
+ 
+graceful
+ 
+degradation.
+ 
+•
+ 
+Accessibility-first
+ 
+UI:
+ 
+Screen-reader
+ 
+compatible,
+ 
+high-contrast
+ 
+mode,
+ 
+large
+ 
+tap
+ 
+targets.
+ 
+ 
+Out of Scope (v2.0): 
+•
+ 
+Full
+ 
+LMS
+ 
+(Learning
+ 
+Management
+ 
+System)
+ 
+integration.
+ 
+•
+ 
+Teacher
+ 
+dashboard
+ 
+/
+ 
+classroom
+ 
+management
+ 
+features.
+ 
+•
+ 
+Real-time
+ 
+AR
+ 
+overlay
+ 
+on
+ 
+camera
+ 
+feed
+ 
+(planned
+ 
+for
+ 
+v3.0).
+ 
+•
+ 
+Full
+ 
+multilingual
+ 
+support
+ 
+beyond
+ 
+English
+ 
+(Semester
+ 
+3
+ 
+roadmap).
+ 
+ 
+1.5  Definitions, Acronyms, and Abbreviations 
+Term Definition 
+MATA Multimodal Accessible Textbook Assistant – the mobile application. 
+OCR Optical Character Recognition – text extraction from images. 
+LLM Large Language Model – AI model for natural language generation. 
+TTS Text-to-Speech – converts text to audio output. 
+STT Speech-to-Text – converts voice input to text (for voice Q&A). 
+ViT Vision Transformer – image feature extraction model. 
+DETR Detection Transformer – object detection in images. 
+VLM Vision-Language Model (e.g., LLaVA) – understands images + text. 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 5 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Term Definition 
+API Application Programming Interface. 
+SDK Software Development Kit. 
+Flutter Google's cross-platform mobile UI framework (Dart language). 
+FastAPI Python-based REST API backend framework. 
+MVP Minimum Viable Product. 
+FR Functional Requirement. 
+NFR Non-Functional Requirement. 
+SRS Software Requirements Specification. 
+CER Character Error Rate – OCR accuracy metric. 
+MOS Mean Opinion Score – TTS quality metric (1–5 scale). 
+BLEU Bilingual Evaluation Understudy – NLP text quality metric. 
+WCAG Web Content Accessibility Guidelines (also applicable to mobile). 
+SPPU Savitribai Phule Pune University. 
+MITAOE MIT Academy of Engineering. 
+ 
+1.6  References 
+•
+ 
+IEEE
+ 
+Std
+ 
+830-1998
+ 
+–
+ 
+IEEE
+ 
+Recommended
+ 
+Practice
+ 
+for
+ 
+Software
+ 
+Requirements
+ 
+Specifications.
+ 
+•
+ 
+M.
+ 
+Li
+ 
+et
+ 
+al.,
+ 
+'TrOCR:
+ 
+Transformer-based
+ 
+OCR
+ 
+with
+ 
+Pre-trained
+ 
+Models,'
+ 
+AAAI
+ 
+2023.
+ 
+•
+ 
+A.
+ 
+F.
+ 
+Biten
+ 
+et
+ 
+al.,
+ 
+'LaTr:
+ 
+Layout-Aware
+ 
+Transformer
+ 
+for
+ 
+Scene-Text
+ 
+VQA,'
+ 
+CVPR
+ 
+2022.
+ 
+•
+ 
+P.
+ 
+Yan
+ 
+et
+ 
+al.,
+ 
+'Context-Aware
+ 
+Chart
+ 
+Element
+ 
+Detection
+ 
+(CACHED),'
+ 
+ICDAR
+ 
+2023.
+ 
+•
+ 
+Y.
+ 
+Fu
+ 
+et
+ 
+al.,
+ 
+'EDSL:
+ 
+Encoder-Decoder
+ 
+for
+ 
+Mathematical
+ 
+Expression
+ 
+Recognition,'
+ 
+ICDAR
+ 
+2023.
+ 
+•
+ 
+M.
+ 
+Le
+ 
+et
+ 
+al.,
+ 
+'Voicebox:
+ 
+Text-Guided
+ 
+Multilingual
+ 
+Speech
+ 
+Generation
+ 
+at
+ 
+Scale,'
+ 
+NeurIPS
+ 
+2023.
+ 
+•
+ 
+M.
+ 
+Schorlemmer
+ 
+et
+ 
+al.,
+ 
+'Generating
+ 
+Qualitative
+ 
+Descriptions
+ 
+of
+ 
+Diagrams,'
+ 
+Diagrams
+ 
+2024.
+ 
+•
+ 
+G.
+ 
+Li
+ 
+et
+ 
+al.,
+ 
+'Aligning
+ 
+Sentence
+ 
+Simplification
+ 
+with
+ 
+ESL
+ 
+Learner
+ 
+Proficiency,'
+ 
+NAACL
+ 
+2025.
+ 
+•
+ 
+X.
+ 
+Zhou
+ 
+et
+ 
+al.,
+ 
+'Deep
+ 
+Learning
+ 
+Based
+ 
+Knowledge
+ 
+Tracing,'
+ 
+Scientific
+ 
+Reports
+ 
+2025.
+ 
+•
+ 
+Flutter
+ 
+Documentation
+ 
+–
+ 
+https://flutter.dev/docs
+ 
+•
+ 
+Android
+ 
+Accessibility
+ 
+Guidelines
+ 
+–
+ 
+https://developer.android.com/guide/topics/ui/accessibility
+ 
+•
+ 
+Apple
+ 
+HIG
+ 
+Accessibility
+ 
+–
+ 
+https://developer.apple.com/design/human-interface-guidelines/accessibility
+ 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 6 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+2.  Overall Descrip tion 
+2.1  Product Perspective 
+MATA is a standalone native mobile application — not a module of a larger existing system. The shift from 
+a
+ 
+web-based
+ 
+architecture
+ 
+(SRS
+ 
+v1.0)
+ 
+to
+ 
+a
+ 
+mobile
+ 
+application
+ 
+is
+ 
+driven
+ 
+by
+ 
+the
+ 
+following
+ 
+critical
+ 
+insights:
+ 
+ 
+Why Mobile App over Website? 1. Camer a-Fir st Access: The primar y input for a studen t is poin ting the phone at a textbook — this is natural on mobile, unna tural on a website.2. Offline Capability: Studen ts in rural India or low-connectivity areas cannot rely on browser-based cloud systems. A mobile app can run lightweigh t models offline.3. Accessibility APIs: Andr oid TalkBack and iOS VoiceOv er provide native screen-r eader integration that a website cannot match.4. Push Notific ations: App can remind studen ts to continue learning , some thing impossible in a passiv e website.5. App Store Distribution: Deplo ying via Google Play / App Store reaches millions of studen ts directly without any setup friction. 
+ 
+The application communicates with a cloud backend (FastAPI server) for heavy AI inference (LLM, VLM) 
+while
+ 
+performing
+ 
+lightweight
+ 
+tasks
+ 
+(OCR,
+ 
+TTS)
+ 
+on-device
+ 
+when
+ 
+possible.
+ 
+The
+ 
+architecture
+ 
+is
+ 
+client-heavy
+ 
+for
+ 
+speed
+ 
+and
+ 
+offline-resilience.
+ 
+ 
+2.2  Product Functions 
+MATA's primary functions as a mobile app: 
+1.
+ 
+Camera
+ 
+Capture
+ 
+–
+ 
+Real-time
+ 
+viewfinder
+ 
+to
+ 
+photograph
+ 
+textbook
+ 
+pages.
+ 
+2.
+ 
+Gallery
+ 
+/
+ 
+PDF
+ 
+Import
+ 
+–
+ 
+Upload
+ 
+from
+ 
+phone
+ 
+gallery
+ 
+or
+ 
+file
+ 
+manager.
+ 
+3.
+ 
+On-Device
+ 
+Preprocessing
+ 
+–
+ 
+Image
+ 
+deskew,
+ 
+crop,
+ 
+enhance
+ 
+before
+ 
+sending
+ 
+to
+ 
+AI.
+ 
+4.
+ 
+OCR
+ 
++
+ 
+Layout
+ 
+Analysis
+ 
+–
+ 
+Extract
+ 
+and
+ 
+structure
+ 
+all
+ 
+text
+ 
+from
+ 
+the
+ 
+page.
+ 
+5.
+ 
+Visual
+ 
+Content
+ 
+Understanding
+ 
+–
+ 
+Describe
+ 
+diagrams,
+ 
+charts,
+ 
+equations
+ 
+via
+ 
+VLM.
+ 
+6.
+ 
+Age-Adaptive
+ 
+Explanation
+ 
+–
+ 
+LLM
+ 
+generates
+ 
+explanations
+ 
+tuned
+ 
+to
+ 
+Child/Teen/Adult
+ 
+mode.
+ 
+7.
+ 
+Text-to-Speech
+ 
+Playback
+ 
+–
+ 
+Native
+ 
++
+ 
+neural
+ 
+TTS
+ 
+with
+ 
+playback
+ 
+controls.
+ 
+8.
+ 
+Voice
+ 
+/
+ 
+Text
+ 
+Q&A
+ 
+–
+ 
+Interactive
+ 
+follow-up
+ 
+via
+ 
+microphone
+ 
+or
+ 
+keyboard.
+ 
+9.
+ 
+Offline
+ 
+Core
+ 
+–
+ 
+OCR
+ 
++
+ 
+basic
+ 
+TTS
+ 
+functional
+ 
+without
+ 
+internet.
+ 
+10.
+ 
+Learning
+ 
+History
+ 
+–
+ 
+Session
+ 
+log;
+ 
+saved
+ 
+explanations
+ 
+accessible
+ 
+later.
+ 
+11.
+ 
+Adaptive
+ 
+Feedback
+ 
+–
+ 
+Difficulty
+ 
+rating
+ 
+adjusts
+ 
+next
+ 
+explanation
+ 
+complexity.
+ 
+12.
+ 
+Accessibility
+ 
+Mode
+ 
+–
+ 
+High
+ 
+contrast,
+ 
+large
+ 
+text,
+ 
+screen-reader
+ 
+compatible.
+ 
+ 
+2.3  User Classes and Characteristics 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 7 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+User Class Age Description App Usage Pattern 
+Visually Impaired Student Any Relies entirely on TTS audio; cannot see screen clearly. 
+Camera
+ 
+capture
+ 
+→
+ 
+voice
+ 
+Q&A
+ 
+→
+ 
+audio
+ playback only. 
+Primary Learner 8–12 Young student; needs child-mode explanations. 
+Parent-assisted
+ 
+capture
+ 
+→
+ 
+listens
+ 
+to
+ explanation. 
+Secondary Learner 13–16 Self-sufficient; uses teen mode; may ask questions. 
+Self-capture
+ 
+→
+ 
+audio
+ 
++
+ 
+text
+ 
+view
+ 
+→
+ 
+typed
+ Q&A. 
+Adult / Self-Learner 17+ College student or adult; uses full detail mode. 
+PDF
+ 
+import
+ 
+→
+ 
+detailed
+ 
+explanation
+ 
+→
+ 
+research
+ Q&A. 
+Teacher / Educator 25+ Demos the app in class; may use it for lesson prep. Classroom demonstration; bulk page scan. 
+Parent 30+ Helps younger child use the app. Assists child in capturing pages; monitors history. 
+Admin / Developer Any Manages backend AI models and monitors performance. Backend dashboard (separate admin panel). 
+ 
+2.4  Operating Environment 
+2.4.1  Mobile Client Environment 
+Parameter Requirement 
+Target Platforms Android 10.0+ (API Level 29+) and iOS 14.0+ 
+Development Framework Flutter 3.x (Dart) – single codebase for Android + iOS 
+Minimum RAM 3 GB (for on-device OCR inference) 
+Storage 100 MB app install + 500 MB for offline model cache 
+Camera Rear camera with autofocus, minimum 8 MP 
+Microphone Required for voice Q&A (STT) feature 
+Speaker / Headphones Required for TTS audio output 
+Connectivity Wi-Fi / 4G for LLM+VLM cloud calls; offline mode available for OCR+TTS 
+Screen Size 4.5 inches minimum; optimized for 6–7 inch displays 
+ 
+2.4.2  Backend Server Environment 
+Component Specification 
+OS Ubuntu 22.04 LTS 
+Language / Framework Python 3.10+ / FastAPI 0.100+ 
+GPU NVIDIA RTX 3060+ (12 GB VRAM) for LLM+VLM inference 
+RAM 32 GB DDR4 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 8 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Component Specification 
+Storage 100 GB SSD for model weights + logs 
+API Protocol REST over HTTPS; JSON payloads; multipart/form-data for image uploads 
+Deployment Docker + NGINX reverse proxy; optional: cloud (AWS/GCP/Azure) 
+Database PostgreSQL 14+ for user profiles; Redis for session caching 
+ 
+2.5  Design and Implementation Constraints 
+•
+ 
+[APP]
+ 
+The
+ 
+mobile
+ 
+app
+ 
+MUST
+ 
+be
+ 
+built
+ 
+using
+ 
+Flutter
+ 
+for
+ 
+cross-platform
+ 
+(Android
+ 
++
+ 
+iOS)
+ 
+deployment
+ 
+from
+ 
+a
+ 
+single
+ 
+codebase,
+ 
+reducing
+ 
+development
+ 
+overhead.
+ 
+•
+ 
+[APP]
+ 
+On-device
+ 
+inference
+ 
+(OCR,
+ 
+lightweight
+ 
+TTS)
+ 
+MUST
+ 
+use
+ 
+quantized
+ 
+ONNX
+ 
+or
+ 
+TensorFlow
+ 
+Lite
+ 
+models
+ 
+to
+ 
+run
+ 
+within
+ 
+3
+ 
+GB
+ 
+RAM
+ 
+without
+ 
+draining
+ 
+battery.
+ 
+•
+ 
+[APP]
+ 
+The
+ 
+app
+ 
+MUST
+ 
+NOT
+ 
+require
+ 
+root/jailbreak
+ 
+access
+ 
+to
+ 
+any
+ 
+device
+ 
+functionality.
+ 
+•
+ 
+LLM
+ 
+and
+ 
+Vision-Language
+ 
+Model
+ 
+inference
+ 
+MUST
+ 
+run
+ 
+on
+ 
+the
+ 
+cloud
+ 
+backend
+ 
+due
+ 
+to
+ 
+model
+ 
+size
+ 
+(7B–72B
+ 
+parameters);
+ 
+results
+ 
+are
+ 
+streamed
+ 
+back
+ 
+to
+ 
+the
+ 
+app.
+ 
+•
+ 
+[APP]
+ 
+Camera
+ 
+integration
+ 
+MUST
+ 
+comply
+ 
+with
+ 
+Android
+ 
+Camera2
+ 
+API
+ 
+and
+ 
+iOS
+ 
+AVFoundation
+ 
+framework
+ 
+guidelines.
+ 
+•
+ 
+[APP]
+ 
+All
+ 
+personal
+ 
+data
+ 
+(user
+ 
+profiles,
+ 
+session
+ 
+logs)
+ 
+stored
+ 
+on-device
+ 
+MUST
+ 
+be
+ 
+encrypted
+ 
+using
+ 
+AES-256
+ 
+via
+ 
+Flutter
+ 
+Secure
+ 
+Storage.
+ 
+•
+ 
+Diagram
+ 
+interpretation
+ 
+accuracy
+ 
+for
+ 
+complex
+ 
+illustrations
+ 
+remains
+ 
+an
+ 
+active
+ 
+research
+ 
+limitation;
+ 
+the
+ 
+app
+ 
+MUST
+ 
+clearly
+ 
+indicate
+ 
+confidence
+ 
+levels
+ 
+to
+ 
+users.
+ 
+•
+ 
+[APP]
+ 
+App
+ 
+binary
+ 
+size
+ 
+MUST
+ 
+remain
+ 
+below
+ 
+100
+ 
+MB
+ 
+(excluding
+ 
+downloadable
+ 
+model
+ 
+cache)
+ 
+to
+ 
+comply
+ 
+with
+ 
+Play
+ 
+Store
+ 
+and
+ 
+App
+ 
+Store
+ 
+size
+ 
+guidelines.
+ 
+ 
+2.6  Assumptions and Dependencies 
+2.6.1  Assumptions 
+•
+ 
+The
+ 
+device
+ 
+camera
+ 
+produces
+ 
+images
+ 
+of
+ 
+sufficient
+ 
+quality
+ 
+(
+≥
+8
+ 
+MP)
+ 
+for
+ 
+OCR.
+ 
+•
+ 
+Internet
+ 
+connectivity
+ 
+(Wi-Fi
+ 
+or
+ 
+4G)
+ 
+is
+ 
+available
+ 
+for
+ 
+LLM/VLM-dependent
+ 
+features.
+ 
+•
+ 
+The
+ 
+primary
+ 
+language
+ 
+of
+ 
+textbook
+ 
+content
+ 
+is
+ 
+English
+ 
+in
+ 
+the
+ 
+initial
+ 
+version.
+ 
+•
+ 
+The
+ 
+user
+ 
+selects
+ 
+their
+ 
+age/difficulty
+ 
+level
+ 
+during
+ 
+first-time
+ 
+app
+ 
+onboarding.
+ 
+•
+ 
+Students
+ 
+upload
+ 
+single
+ 
+pages,
+ 
+not
+ 
+multi-page
+ 
+spreads
+ 
+(each
+ 
+page
+ 
+processed
+ 
+individually).
+ 
+ 
+2.6.2  Dependencies 
+•
+ 
+Flutter
+ 
+SDK
+ 
+3.x
+ 
+and
+ 
+Dart
+ 
+3.x
+ 
+–
+ 
+mobile
+ 
+development
+ 
+framework.
+ 
+•
+ 
+Hugging
+ 
+Face
+ 
+Transformers
+ 
+–
+ 
+pre-trained
+ 
+AI
+ 
+model
+ 
+weights
+ 
+(TrOCR,
+ 
+LLaVA,
+ 
+LLaMA).
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 9 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+•
+ 
+Coqui
+ 
+TTS
+ 
+/
+ 
+Piper
+ 
+–
+ 
+open-source
+ 
+neural
+ 
+TTS
+ 
+(MIT/Mozilla
+ 
+license).
+ 
+•
+ 
+Google
+ 
+MLKit
+ 
+Text
+ 
+Recognition
+ 
+–
+ 
+on-device
+ 
+OCR
+ 
+fallback
+ 
+for
+ 
+Android.
+ 
+•
+ 
+Apple
+ 
+Vision
+ 
+Framework
+ 
+–
+ 
+on-device
+ 
+OCR
+ 
+fallback
+ 
+for
+ 
+iOS.
+ 
+•
+ 
+FastAPI
+ 
++
+ 
+Uvicorn
+ 
+–
+ 
+backend
+ 
+REST
+ 
+API
+ 
+server.
+ 
+•
+ 
+PostgreSQL
+ 
++
+ 
+Redis
+ 
+–
+ 
+backend
+ 
+data
+ 
+persistence
+ 
+and
+ 
+caching.
+ 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 10 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+3.  Specific Requir emen ts 
+This section is the primary contractual core of the SRS. All requirements use the priority classification: High 
+(MVP
+ 
+–
+ 
+must
+ 
+ship),
+ 
+Medium
+ 
+(Semester
+ 
+3),
+ 
+Low
+ 
+(Future
+ 
+scope).
+ 
+ 
+3.1  External Interface Requirements 
+3.1.1  User Interface – Mobile App [APP] 
+ID Requirement Priority 
+FR-01 The app SHALL have a bottom navigation bar with tabs: Home (Scan), History, Profile, Settings. High 
+FR-02 The Home screen SHALL display a camera viewfinder occupying at least 70% of the screen with a prominent Capture button. High 
+FR-03 The app SHALL provide a Gallery Import button to select images from the device photo library. High 
+FR-04 The app SHALL provide a PDF Import option via the device file manager. High 
+FR-05 After processing, results SHALL be displayed on a Result Screen with: explanation text (scrollable), audio player bar (play/pause/speed), and a Q&A input field. High 
+FR-06 The app SHALL include an Age Level selector (Child / Teen / Adult) accessible from the Result Screen and from Settings. High 
+FR-07 The app SHALL support a High-Contrast Accessibility Mode toggled from Settings. High 
+FR-08 The app SHALL support system font-size scaling (small / medium / large / extra-large). Medium 
+FR-09 All interactive elements SHALL have minimum tap target size of 48x48 dp per Android and iOS guidelines. High 
+FR-10 The app SHALL be fully compatible with Android TalkBack and iOS VoiceOver screen readers. High 
+FR-11 The app SHALL display an animated processing indicator with stage labels (Scanning... / Analysing Diagrams... / Generating Explanation... / Preparing Audio...). High 
+FR-12 
+The
+ 
+Q&A
+ 
+section
+ 
+SHALL
+ 
+show
+ 
+a
+ 
+conversation
+ 
+thread
+ 
+(user
+ 
+question
+ 
+→
+ 
+AI
+ 
+answer)
+ 
+in
+ a scrollable chat-style list. High 
+ 
+3.1.2  Hardware Interfaces [APP] 
+ID Requirement Priority 
+FR-13 The app SHALL access the device rear camera using Flutter camera plugin (Camera2 API / AVFoundation). High 
+FR-14 The app SHALL request microphone permission for voice-based Q&A input (STT). Medium 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 11 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ID Requirement Priority 
+FR-15 The app SHALL output TTS audio through the device speaker and support Bluetooth headphone routing. High 
+FR-16 The app MAY use the device flashlight/torch to illuminate the textbook when capturing in low light. Low 
+ 
+3.1.3  Software / API Interfaces 
+ID Requirement Priority 
+FR-17 The mobile app SHALL communicate with the FastAPI backend via HTTPS REST API. High 
+FR-18 Image upload SHALL use HTTP POST multipart/form-data to endpoint POST /api/v1/process. High 
+FR-19 The backend SHALL return a structured JSON response: { ocr_text, layout, visuals, explanation, audio_url, session_id }. High 
+FR-20 Q&A requests SHALL use POST /api/v1/qa with payload { question, session_id, history }. High 
+FR-21 Audio SHALL be returned as a pre-signed URL to an MP3/WAV file streamed from server storage. High 
+FR-22 The app SHALL fall back to Google MLKit (Android) or Apple Vision (iOS) for on-device OCR when offline. Medium 
+FR-23 The app SHALL use on-device Piper TTS for offline audio generation for short explanations. Medium 
+ 
+3.1.4  Communication Interfaces 
+•
+ 
+FR-24:
+ 
+All
+ 
+client-server
+ 
+communication
+ 
+SHALL
+ 
+use
+ 
+TLS
+ 
+1.3
+ 
+(HTTPS).
+ 
+Plain
+ 
+HTTP
+ 
+SHALL
+ 
+be
+ 
+rejected.
+ 
+•
+ 
+FR-25:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+implement
+ 
+request
+ 
+timeout
+ 
+of
+ 
+30
+ 
+seconds
+ 
+for
+ 
+API
+ 
+calls,
+ 
+with
+ 
+a
+ 
+user-visible
+ 
+retry
+ 
+prompt
+ 
+on
+ 
+timeout.
+ 
+•
+ 
+FR-26:
+ 
+API
+ 
+responses
+ 
+exceeding
+ 
+5
+ 
+seconds
+ 
+SHALL
+ 
+display
+ 
+a
+ 
+progress
+ 
+message:
+ 
+Still
+ 
+processing
+ 
+your
+ 
+page.
+ 
+•
+ 
+FR-27:
+ 
+Session
+ 
+tokens
+ 
+SHALL
+ 
+be
+ 
+JWT-based
+ 
+with
+ 
+24-hour
+ 
+expiry
+ 
+and
+ 
+silent
+ 
+refresh
+ 
+mechanism.
+ 
+ 
+3.2  Functional Requirements by Module 
+ 
+3.2.1  Module 1 – Camera Capture and Image Input [APP] 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 12 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ID Requirement Priority 
+FR-28 The camera module SHALL display a real-time viewfinder with an auto-detect page boundary overlay (rectangle guide). High 
+FR-29 The app SHALL perform automatic image sharpness assessment and prompt the user to retake if blur score < threshold. Medium 
+FR-30 The app SHALL support single-tap capture and also a 3-second timer capture mode for hands-free use by visually impaired users. High 
+FR-31 After capture, the app SHALL show a preview screen with options: Use This Image / Retake / Crop. High 
+FR-32 The crop tool SHALL include an auto-detect page border feature using edge detection. Medium 
+FR-33 The app SHALL accept PDF files and automatically render each page as an image for processing. High 
+FR-34 Maximum accepted image file size SHALL be 15 MB; PDF maximum SHALL be 50 MB (first 20 pages). High 
+ 
+3.2.2  Module 2 – Preprocessing 
+ID Requirement Priority 
+FR-35 The app SHALL perform on-device preprocessing: deskew (up to ±20°), resize to 300 DPI equivalent, noise reduction. High 
+FR-36 Color correction SHALL normalize over/under-exposed textbook images to improve OCR accuracy. Medium 
+FR-37 Preprocessing SHALL complete within 2 seconds on a mid-range device (Snapdragon 700-series or equivalent). High 
+FR-38 The preprocessed image SHALL be compressed to JPEG quality 85% before upload to reduce bandwidth usage. High 
+ 
+3.2.3  Module 3 – OCR and Layout Analysis 
+ID Requirement Priority 
+FR-39 The backend SHALL extract all text using TrOCR (primary) with Tesseract 5.x as fallback. High 
+FR-40 The system SHALL identify layout elements: headings, subheadings, paragraphs, tables, captions, footnotes, bullet lists, equations. High 
+FR-41 The system SHALL reconstruct correct reading order for multi-column textbook pages. High 
+FR-42 The system SHALL extract text embedded inside diagrams and associate it with the parent visual region. Medium 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 13 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ID Requirement Priority 
+FR-43 OCR output SHALL include character-level confidence scores; regions with confidence < 60% SHALL be flagged. Medium 
+FR-44 Layout segmentation SHALL use LayoutLMv3 or Donut model on the backend server. High 
+ 
+3.2.4  Module 4 – Vision Understanding (Diagram / Chart / Equation) 
+ID Requirement Priority 
+FR-45 The system SHALL detect and classify visual regions as: diagram, chart, graph, math equation, table, or photo. High 
+FR-46 The system SHALL generate a natural-language description of each diagram using LLaVA v1.5 or equivalent VLM. High 
+FR-47 Chart interpretation SHALL identify: chart type, axis labels, data trends, legend items, and key values. High 
+FR-48 Mathematical expressions SHALL be parsed and described in natural English (e.g., 'x squared plus 2x minus 5 equals zero'). High 
+FR-49 The system SHALL identify spatial relationships in diagrams (e.g., 'Arrow A points from the nucleus to the cytoplasm'). Medium 
+FR-50 Supported diagram types SHALL include: science diagrams, flowcharts, geometry figures, bar/line/pie charts, labelled maps, and circuit diagrams. High 
+FR-51 The system SHALL return a confidence score for each visual description; low-confidence descriptions SHALL be marked for user awareness. Medium 
+ 
+3.2.5  Module 5 – LLM Explanation Generation 
+ID Requirement Priority 
+FR-52 The LLM SHALL combine OCR text and visual descriptions into a single coherent explanation of the textbook page. High 
+FR-53 The explanation SHALL be generated in three modes: Child (8–12), Teen (13–16), Adult. High 
+FR-54 Child mode: vocabulary at Class 5 reading level; includes analogies and simple 
+examples;
+ 
+sentences
+ 
+≤
+ 
+15
+ 
+words. High 
+FR-55 Teen mode: standard educational vocabulary; includes technical terms with brief definitions; structured paragraphs. High 
+FR-56 Adult mode: full technical content; formal language; includes formulae references where appropriate. High 
+FR-57 The LLM SHALL use LLaMA-3-8B-Instruct or Qwen2-72B hosted on the backend server. High 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 14 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ID Requirement Priority 
+FR-58 Explanations SHALL be grounded strictly in the uploaded page content to minimize hallucination. High 
+FR-59 Explanation length SHALL be 150–400 words for Child mode, 250–500 words for Teen, 300–600 words for Adult. Medium 
+FR-60 The system SHALL detect if the page has no educational content (e.g., blank page, cover page) and inform the user. Medium 
+ 
+3.2.6  Module 6 – Text-to-Speech (TTS) [APP] 
+ID Requirement Priority 
+FR-61 The app SHALL convert the explanation to audio using Coqui TTS (server-side) or Piper TTS (on-device offline). High 
+FR-62 The audio player SHALL have: Play/Pause, Rewind 10s, Forward 10s, Speed control (0.75x / 1x / 1.25x / 1.5x / 2x). High 
+FR-63 The audio player SHALL highlight the sentence currently being spoken in the text display below (karaoke-style sync). Medium 
+FR-64 TTS SHALL correctly pronounce scientific terms and mathematical expressions read aloud. Medium 
+FR-65 The generated audio file SHALL be cached locally so the user can replay without re-requesting from the server. High 
+FR-66 
+TTS
+ 
+audio
+ 
+quality
+ 
+SHALL
+ 
+achieve
+ 
+MOS
+ 
+≥
+ 
+3.5
+ 
+in
+ 
+user
+ 
+evaluation. High 
+ 
+3.2.7  Module 7 – Interactive Q&A [APP] 
+ID Requirement Priority 
+FR-67 After explanation playback, the app SHALL display a Q&A input area (text field + microphone button). High 
+FR-68 Voice input via microphone SHALL use on-device STT (Google / Apple) to convert speech to text. Medium 
+FR-69 The system SHALL answer questions using the stored context of the current page (session-aware RAG). High 
+FR-70 Answers SHALL be displayed as text and read aloud via TTS automatically. High 
+FR-71 The Q&A module SHALL support at least 15 consecutive turns without context loss. Medium 
+FR-72 The system SHALL handle off-topic questions gracefully with a response like: 'That question doesn't seem to be about this page. Want me to answer anyway?' Medium 
+FR-73 Predefined quick question chips SHALL appear below the player: 'Explain Again', 'Simpler Please', 'Give an Example', 'What Does the Diagram Show?' High 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 15 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ 
+3.2.8  Module 8 – Adaptive Learning and Feedback [APP] 
+ID Requirement Priority 
+FR-74 At the end of each explanation, the app SHALL display a 3-option feedback prompt: Too Easy / Just Right / Too Hard. High 
+FR-75 Feedback SHALL adjust the complexity of the next explanation within the same session. Medium 
+FR-76 The app SHALL maintain a session-level difficulty score updated after each feedback interaction. Medium 
+FR-77 The app SHALL log all sessions (page capture, explanation, Q&A exchanges, feedback) to local SQLite. Medium 
+FR-78 Session data SHALL be synced to the backend when internet is available, for future personalization. Low 
+ 
+3.2.9  Module 9 – User Profile and History [APP] 
+ID Requirement Priority 
+FR-79 
+During
+ 
+first
+ 
+launch,
+ 
+the
+ 
+app
+ 
+SHALL
+ 
+run
+ 
+an
+ 
+onboarding
+ 
+wizard:
+ 
+Name
+ 
+→
+ 
+Age
+ 
+Level
+ 
+→
+ 
+Accessibility
+ 
+Preferences
+ 
+→
+ 
+Notification
+ 
+Preferences. High 
+FR-80 The app SHALL store user profile on-device (encrypted) and optionally sync to backend. Medium 
+FR-81 The History tab SHALL list all past sessions sorted by date with: thumbnail, date, subject tag, and duration. Medium 
+FR-82 The user SHALL be able to tap any history item to replay the explanation audio and re-enter Q&A. Medium 
+FR-83 The app SHALL allow users to bookmark/save specific explanations for quick access. Low 
+FR-84 The user SHALL be able to delete individual history items or clear all history from Settings. Medium 
+ 
+3.3  Non-Functional Requirements 
+ 
+3.3.1  Performance 
+ID Requirement Target Metric 
+NFR-01 End-to-end pipeline: camera capture to first audio output. 
+≤
+ 
+25
+ 
+seconds
+ 
+on
+ 
+4G;
+ 
+≤
+ 
+15
+ 
+seconds
+ 
+on
+ 
+Wi-Fi. 
+NFR-02 On-device preprocessing time. 
+≤
+ 
+2
+ 
+seconds
+ 
+on
+ 
+mid-range
+ 
+Android
+ (Snapdragon 720G+). 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 16 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+ID Requirement Target Metric 
+NFR-03 OCR Character Error Rate on clean textbook images. CER < 5%. 
+NFR-04 Explanation quality – BLEU score. 
+BLEU
+ 
+≥
+ 
+0.35
+ 
+vs
+ 
+human
+ 
+reference. 
+NFR-05 TTS Mean Opinion Score. 
+MOS
+ 
+≥
+ 
+3.5
+ 
+/
+ 
+5.0. 
+NFR-06 App launch time (cold start). 
+≤
+ 
+3
+ 
+seconds
+ 
+on
+ 
+supported
+ 
+devices. 
+NFR-07 App battery drain per 30-minute session. 
+≤
+ 
+10%
+ 
+on
+ 
+a
+ 
+4000
+ 
+mAh
+ 
+battery. 
+NFR-08 API server support for concurrent users. 
+≥
+ 
+20
+ 
+concurrent
+ 
+users
+ 
+without
+ 
+>50%
+ 
+latency
+ increase. 
+ 
+3.3.2  Safety and Content 
+•
+ 
+NFR-09:
+ 
+The
+ 
+LLM
+ 
+output
+ 
+SHALL
+ 
+pass
+ 
+a
+ 
+content
+ 
+safety
+ 
+filter
+ 
+before
+ 
+display.
+ 
+No
+ 
+harmful,
+ 
+offensive,
+ 
+or
+ 
+age-inappropriate
+ 
+content
+ 
+SHALL
+ 
+reach
+ 
+the
+ 
+user.
+ 
+•
+ 
+NFR-10:
+ 
+Uploaded
+ 
+images
+ 
+SHALL
+ 
+NOT
+ 
+be
+ 
+retained
+ 
+on
+ 
+the
+ 
+server
+ 
+beyond
+ 
+48
+ 
+hours.
+ 
+Auto-deletion
+ 
+policy
+ 
+MUST
+ 
+be
+ 
+enforced.
+ 
+•
+ 
+NFR-11:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+NOT
+ 
+silently
+ 
+fail.
+ 
+Any
+ 
+processing
+ 
+error
+ 
+SHALL
+ 
+display
+ 
+a
+ 
+clear,
+ 
+user-friendly
+ 
+error
+ 
+message
+ 
+with
+ 
+recovery
+ 
+options.
+ 
+•
+ 
+NFR-12:
+ 
+If
+ 
+OCR
+ 
+confidence
+ 
+is
+ 
+critically
+ 
+low,
+ 
+the
+ 
+app
+ 
+SHALL
+ 
+warn
+ 
+the
+ 
+user:
+ 
+'Image
+ 
+quality
+ 
+is
+ 
+poor.
+ 
+Results
+ 
+may
+ 
+be
+ 
+inaccurate.
+ 
+Please
+ 
+retake
+ 
+with
+ 
+better
+ 
+lighting.'
+ 
+ 
+3.3.3  Security [APP] 
+•
+ 
+NFR-13:
+ 
+All
+ 
+server
+ 
+communication
+ 
+SHALL
+ 
+use
+ 
+TLS
+ 
+1.3.
+ 
+HTTP
+ 
+traffic
+ 
+SHALL
+ 
+be
+ 
+blocked
+ 
+via
+ 
+network
+ 
+security
+ 
+config.
+ 
+•
+ 
+NFR-14:
+ 
+User
+ 
+credentials
+ 
+and
+ 
+session
+ 
+tokens
+ 
+SHALL
+ 
+be
+ 
+stored
+ 
+using
+ 
+Flutter
+ 
+Secure
+ 
+Storage
+ 
+(Android
+ 
+Keystore
+ 
+/
+ 
+iOS
+ 
+Keychain).
+ 
+•
+ 
+NFR-15:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+implement
+ 
+certificate
+ 
+pinning
+ 
+for
+ 
+the
+ 
+backend
+ 
+API
+ 
+domain
+ 
+to
+ 
+prevent
+ 
+man-in-the-middle
+ 
+attacks.
+ 
+•
+ 
+NFR-16:
+ 
+Uploaded
+ 
+images
+ 
+SHALL
+ 
+be
+ 
+transmitted
+ 
+as
+ 
+encrypted
+ 
+multipart
+ 
+requests;
+ 
+no
+ 
+plain-text
+ 
+image
+ 
+bytes.
+ 
+•
+ 
+NFR-17:
+ 
+Admin
+ 
+backend
+ 
+access
+ 
+SHALL
+ 
+require
+ 
+two-factor
+ 
+authentication.
+ 
+ 
+3.3.4  Reliability and Availability 
+•
+ 
+NFR-18:
+ 
+Backend
+ 
+server
+ 
+uptime
+ 
+SHALL
+ 
+be
+ 
+≥
+ 
+95%
+ 
+during
+ 
+evaluation
+ 
+and
+ 
+demo
+ 
+periods.
+ 
+•
+ 
+NFR-19:
+ 
+Module
+ 
+failure
+ 
+isolation:
+ 
+if
+ 
+the
+ 
+VLM
+ 
+diagram
+ 
+module
+ 
+fails,
+ 
+the
+ 
+system
+ 
+SHALL
+ 
+proceed
+ 
+with
+ 
+OCR-only
+ 
+explanation
+ 
+and
+ 
+notify
+ 
+the
+ 
+user.
+ 
+•
+ 
+NFR-20:
+ 
+Offline
+ 
+mode
+ 
+(OCR
+ 
++
+ 
+TTS)
+ 
+SHALL
+ 
+be
+ 
+available
+ 
+100%
+ 
+of
+ 
+the
+ 
+time
+ 
+regardless
+ 
+of
+ 
+internet
+ 
+connectivity.
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 17 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+•
+ 
+NFR-21:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+implement
+ 
+automatic
+ 
+retry
+ 
+(up
+ 
+to
+ 
+3
+ 
+attempts)
+ 
+for
+ 
+failed
+ 
+API
+ 
+calls
+ 
+with
+ 
+exponential
+ 
+backoff.
+ 
+ 
+3.3.5  Usability and Accessibility [APP] 
+•
+ 
+NFR-22:
+ 
+A
+ 
+new
+ 
+user
+ 
+with
+ 
+no
+ 
+prior
+ 
+AI
+ 
+app
+ 
+experience
+ 
+SHALL
+ 
+complete
+ 
+first
+ 
+scan
+ 
+and
+ 
+hear
+ 
+explanation
+ 
+within
+ 
+3
+ 
+minutes
+ 
+of
+ 
+installing
+ 
+the
+ 
+app.
+ 
+•
+ 
+NFR-23:
+ 
+All
+ 
+text
+ 
+on
+ 
+screen
+ 
+SHALL
+ 
+be
+ 
+readable
+ 
+at
+ 
+system
+ 
+large
+ 
+font
+ 
+size
+ 
+without
+ 
+truncation
+ 
+or
+ 
+overflow.
+ 
+•
+ 
+NFR-24:
+ 
+A
+ 
+visually
+ 
+impaired
+ 
+user
+ 
+relying
+ 
+solely
+ 
+on
+ 
+TalkBack/VoiceOver
+ 
+SHALL
+ 
+be
+ 
+able
+ 
+to
+ 
+complete
+ 
+the
+ 
+full
+ 
+workflow
+ 
+without
+ 
+sighted
+ 
+assistance.
+ 
+•
+ 
+NFR-25:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+follow
+ 
+WCAG
+ 
+2.1
+ 
+Level
+ 
+AA
+ 
+guidelines
+ 
+adapted
+ 
+for
+ 
+mobile
+ 
+(WCAG
+ 
+Mobile
+ 
+Extension,
+ 
+W3C).
+ 
+•
+ 
+NFR-26:
+ 
+Color
+ 
+SHALL
+ 
+NOT
+ 
+be
+ 
+the
+ 
+only
+ 
+means
+ 
+of
+ 
+conveying
+ 
+information
+ 
+(e.g.,
+ 
+error
+ 
+states
+ 
+use
+ 
+icons
+ 
++
+ 
+text,
+ 
+not
+ 
+color
+ 
+alone).
+ 
+ 
+3.3.6  Maintainability and Scalability 
+•
+ 
+NFR-27:
+ 
+The
+ 
+Flutter
+ 
+frontend
+ 
+and
+ 
+FastAPI
+ 
+backend
+ 
+SHALL
+ 
+be
+ 
+fully
+ 
+decoupled;
+ 
+the
+ 
+AI
+ 
+models
+ 
+on
+ 
+the
+ 
+backend
+ 
+SHALL
+ 
+be
+ 
+replaceable
+ 
+without
+ 
+modifying
+ 
+the
+ 
+app.
+ 
+•
+ 
+NFR-28:
+ 
+The
+ 
+backend
+ 
+SHALL
+ 
+be
+ 
+containerized
+ 
+with
+ 
+Docker;
+ 
+each
+ 
+AI
+ 
+module
+ 
+SHALL
+ 
+run
+ 
+in
+ 
+its
+ 
+own
+ 
+container.
+ 
+•
+ 
+NFR-29:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+be
+ 
+structured
+ 
+using
+ 
+Clean
+ 
+Architecture
+ 
+(Presentation
+ 
+/
+ 
+Domain
+ 
+/
+ 
+Data
+ 
+layers)
+ 
+for
+ 
+maintainability.
+ 
+•
+ 
+NFR-30:
+ 
+The
+ 
+codebase
+ 
+SHALL
+ 
+include
+ 
+unit
+ 
+tests
+ 
+covering
+ 
+≥
+ 
+60%
+ 
+of
+ 
+business
+ 
+logic
+ 
+(Flutter
+ 
++
+ 
+Python).
+ 
+ 
+3.3.7  Portability [APP] 
+•
+ 
+NFR-31:
+ 
+The
+ 
+Flutter
+ 
+app
+ 
+SHALL
+ 
+build
+ 
+and
+ 
+run
+ 
+on
+ 
+Android
+ 
+10+
+ 
+(API
+ 
+29+)
+ 
+and
+ 
+iOS
+ 
+14+
+ 
+from
+ 
+a
+ 
+single
+ 
+codebase
+ 
+with
+ 
+platform-specific
+ 
+adapters
+ 
+for
+ 
+camera,
+ 
+STT,
+ 
+and
+ 
+secure
+ 
+storage.
+ 
+•
+ 
+NFR-32:
+ 
+The
+ 
+app
+ 
+APK/IPA
+ 
+SHALL
+ 
+not
+ 
+exceed
+ 
+100
+ 
+MB
+ 
+for
+ 
+initial
+ 
+install;
+ 
+AI
+ 
+model
+ 
+assets
+ 
+SHALL
+ 
+be
+ 
+downloaded
+ 
+on
+ 
+first
+ 
+launch.
+ 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 18 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+4.  System Architectur e – Mobile Applic ation 
+4.1  High-Level Architecture 
+MATA follows a two-tier architecture: a Flutter mobile client (Tier 1) and a FastAPI AI backend server (Tier 
+2).
+ 
+Heavy
+ 
+AI
+ 
+computation
+ 
+(VLM,
+ 
+LLM)
+ 
+is
+ 
+offloaded
+ 
+to
+ 
+the
+ 
+server;
+ 
+lightweight
+ 
+operations
+ 
+(preprocessing,
+ 
+on-device
+ 
+OCR,
+ 
+TTS)
+ 
+run
+ 
+locally
+ 
+on
+ 
+the
+ 
+device.
+ 
+ 
+Tier Component Technology Responsibility 
+Mobile Client (T1) UI Layer Flutter / Dart Camera, navigation, audio player, Q&A UI 
+Mobile Client (T1) Domain Layer Flutter BLoC / Riverpod Business logic, state management, offline logic 
+Mobile Client (T1) Data Layer Dio HTTP, SQLite, Hive API calls, local storage, caching 
+Mobile Client (T1) On-Device AI TFLite / ONNX Runtime Lightweight OCR (MLKit), offline TTS (Piper) 
+Backend Server (T2) API Gateway FastAPI + NGINX Request routing, auth, rate limiting 
+Backend Server (T2) OCR Service TrOCR + Tesseract Text extraction and layout analysis 
+Backend Server (T2) Vision Service LLaVA v1.5 + DETR Diagram/chart description, math parsing 
+Backend Server (T2) LLM Service LLaMA-3-8B / Qwen2-72B Explanation generation and Q&A reasoning 
+Backend Server (T2) TTS Service Coqui TTS / Tacotron 2 Server-side neural speech synthesis 
+Backend Server (T2) Data Store PostgreSQL + Redis User profiles, sessions, model cache 
+ 
+4.2  App Screen Map (Navigation Structure) 
+Screen Description Key Components 
+Splash Screen Brand animation on app launch. Logo, loading indicator. 
+Onboarding (1–3) First-time setup: name, age level, accessibility prefs. Page indicators, selectors, CTA button. 
+Home / Scan Camera viewfinder – main entry point. Camera preview, capture button, gallery/PDF import. 
+Preview / Crop Review captured image before processing. Image preview, crop handles, Confirm / Retake buttons. 
+Processing Pipeline animation while AI works. Stage labels, animated progress, cancel option. 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 19 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Screen Description Key Components 
+Result Explanation text + audio player + Q&A. Text scroll view, audio bar, Q&A thread, feedback chips. 
+History List of past sessions. Date-sorted list, thumbnails, subject tags, delete option. 
+History Detail Replay any saved session. Explanation text, audio player, re-enter Q&A. 
+Profile User settings and preferences. Name, age level, accessibility, notification toggles. 
+Settings App configuration. Dark/light mode, font size, language, data management. 
+ 
+4.3  API Endpoint Specification 
+Method Endpoint Description Request Response 
+POST /api/v1/auth/register Register new user. { name, email, age_level } { user_id, token } 
+POST /api/v1/auth/login Login existing user. { email, password } { token, expiry } 
+POST /api/v1/process Process textbook page image. multipart: image_file, age_level, uid { session_id, ocr, explanation, audio_url } 
+POST /api/v1/qa Q&A on current session. { session_id, question, history } { answer, audio_url } 
+POST /api/v1/feedback Submit difficulty feedback. { session_id, rating } { ack, next_level } 
+GET /api/v1/history Get all user sessions. Header: Authorization: Bearer <token> { sessions[] } 
+GET /api/v1/health Backend health check. None { status, gpu_available } 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 20 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+5.  Other Requir emen ts 
+5.1  Hardware and Software Summary 
+Layer Component Technology / Version 
+Mobile App Framework Flutter 3.x (Dart 3.x) 
+Mobile App State Management Riverpod 2.x or BLoC 
+Mobile App HTTP Client Dio 5.x 
+Mobile App Local Database SQLite via sqflite + Hive 
+Mobile App Secure Storage flutter_secure_storage 
+Mobile App Camera camera plugin (Camera2 / AVFoundation) 
+Mobile App STT (Voice Input) speech_to_text plugin (Google / Apple) 
+Mobile App On-device TTS flutter_tts plugin + Piper model 
+Mobile App On-device OCR google_mlkit_text_recognition / Apple Vision 
+Mobile App PDF Rendering pdf_render / pdfx Flutter plugin 
+Backend API Framework FastAPI 0.100+ (Python 3.10+) 
+Backend OCR TrOCR (Hugging Face) + Tesseract 5.x 
+Backend Layout LayoutLMv3 / Donut (Hugging Face) 
+Backend Vision / VLM LLaVA v1.5 (7B) via Hugging Face 
+Backend Math Parsing EDSL / pix2tex / Im2LaTeX 
+Backend LLM LLaMA-3-8B-Instruct (Meta) or Qwen2-72B 
+Backend TTS Coqui TTS (XTTS v2) or Tacotron 2 
+Backend Database PostgreSQL 14+ / Redis 7+ 
+Backend Deployment Docker + NGINX + Ubuntu 22.04 
+ 
+5.2  Evaluation Metrics 
+Module Metric Target 
+OCR Character Error Rate (CER) < 5% on clean images 
+OCR Word Error Rate (WER) < 10% 
+Explanation BLEU Score 
+≥
+ 
+0.35 
+Explanation ROUGE-L Score 
+≥
+ 
+0.40 
+Explanation Human rating (1–5 scale) 
+≥
+ 
+3.5
+ 
+/
+ 
+5.0 
+Diagram Desc. Human accuracy rating 
+≥
+ 
+70% 
+TTS Mean Opinion Score (MOS) 
+≥
+ 
+3.5
+ 
+/
+ 
+5.0 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 21 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Module Metric Target 
+Performance E2E pipeline time (Wi-Fi, GPU backend) 
+≤
+ 
+15
+ 
+seconds 
+Performance E2E pipeline time (4G, GPU backend) 
+≤
+ 
+25
+ 
+seconds 
+App Stability Crash-free rate (Firebase Crashlytics) 
+≥
+ 
+98% 
+Battery Drain per 30-min session 
+≤
+ 
+10%
+ 
+on
+ 
+4000
+ 
+mAh 
+ 
+5.3  Legal and Compliance 
+•
+ 
+NFR-33:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+comply
+ 
+with
+ 
+India's
+ 
+Digital
+ 
+Personal
+ 
+Data
+ 
+Protection
+ 
+Act
+ 
+2023
+ 
+(DPDPA)
+ 
+for
+ 
+handling
+ 
+user
+ 
+data.
+ 
+•
+ 
+NFR-34:
+ 
+All
+ 
+pre-trained
+ 
+AI
+ 
+models
+ 
+SHALL
+ 
+be
+ 
+used
+ 
+in
+ 
+compliance
+ 
+with
+ 
+their
+ 
+licenses:
+ 
+Meta
+ 
+LLAMA
+ 
+Community
+ 
+License,
+ 
+Apache
+ 
+2.0,
+ 
+MIT,
+ 
+Mozilla
+ 
+Public
+ 
+License.
+ 
+•
+ 
+NFR-35:
+ 
+The
+ 
+app
+ 
+MUST
+ 
+display
+ 
+a
+ 
+Privacy
+ 
+Policy
+ 
+and
+ 
+Terms
+ 
+of
+ 
+Use
+ 
+during
+ 
+onboarding,
+ 
+requiring
+ 
+explicit
+ 
+user
+ 
+consent.
+ 
+•
+ 
+NFR-36:
+ 
+User-uploaded
+ 
+textbook
+ 
+images
+ 
+SHALL
+ 
+NOT
+ 
+be
+ 
+used
+ 
+for
+ 
+model
+ 
+training
+ 
+without
+ 
+explicit
+ 
+written
+ 
+consent
+ 
+from
+ 
+the
+ 
+user.
+ 
+•
+ 
+NFR-37:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+comply
+ 
+with
+ 
+Google
+ 
+Play
+ 
+Developer
+ 
+Policy
+ 
+and
+ 
+Apple
+ 
+App
+ 
+Store
+ 
+Review
+ 
+Guidelines.
+ 
+•
+ 
+NFR-38:
+ 
+The
+ 
+app
+ 
+SHALL
+ 
+include
+ 
+a
+ 
+COPPA-compliant
+ 
+consent
+ 
+mechanism
+ 
+for
+ 
+users
+ 
+under
+ 
+age
+ 
+13
+ 
+(parental
+ 
+consent
+ 
+required).
+ 
+ 
+ 
+6.  Unique Mark et Differentiators and Inno vation Ideas 
+ 
+About This Section This section proposes 8 unique feature ideas that go beyond the core MATA concep t. Each idea is grounded in real mark et gaps, designed to mak e MATA more compe titive, commer cially viable, and impactful. These are roadmap features for v2.0 and beyond. 
+ 
+6.1  Idea 1 – 'Scan-and-Quiz' Mode (Instant Test Generation) 
+Attribute Detail 
+Core Idea After generating an explanation, MATA automatically generates 3–5 quiz questions from the textbook page content. The student answers them via voice or tap; the app grades and explains wrong answers. 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 22 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Attribute Detail 
+Why Unique No accessibility-focused app currently combines explanation AND self-testing in a single camera scan. Existing quiz apps (Quizlet, Kahoot) require manual content entry. 
+Market Gap Students lack immediate self-assessment tools tied to the exact textbook material they are studying at that moment. 
+Tech Required LLM prompt engineering for question generation (MCQ / True-False / Fill-in-the-blank). On-device answer evaluation. 
+User Benefit Converts passive listening to active learning. Proven to improve retention by 30–40% (spacing effect research). 
+Monetization Premium feature in MATA Pro subscription. 
+ 
+6.2  Idea 2 – 'Subject Tagging + Smart Study Planner' 
+Attribute Detail 
+Core Idea MATA automatically detects the subject of each scanned page (Physics, Chemistry, Math, History, Biology etc.) using the LLM. It then builds a personal study timeline showing how many pages the student has covered per subject and suggests what to study next. 
+Why Unique Combines an AI textbook reader with a lightweight study planner — no app currently does this from physical textbook scanning. 
+Market Gap Students (especially Class 10–12 board exam students) struggle to plan revision. A tool that tracks what they've actually read (not just what they plan to read) is unprecedented. 
+Tech Required LLM-based subject and chapter classification. Local SQLite history + visualization charts in Flutter. 
+User Benefit Reduces exam anxiety; provides a concrete picture of revision coverage. 
+Monetization Freemium: basic subject detection free; full study planner + progress analytics in MATA Pro. 
+ 
+6.3  Idea 3 – Vernacular Language Mode (Bhasha Bridge) 
+Attribute Detail 
+Core Idea After generating an explanation in English, MATA offers a 'Translate & Read' button that translates the explanation into 10+ Indian regional languages (Hindi, Marathi, Tamil, Telugu, Bengali, Kannada, Gujarati, Malayalam, Punjabi, Odia) and reads it aloud in that language. 
+Why Unique No existing accessible textbook tool supports regional Indian language audio explanations from English textbooks. This directly targets India's 200M+ students studying in regional-medium schools. 
+Market Gap NCERT and state board textbooks are in English but millions of students think and comprehend better in their mother tongue. 
+Tech Required IndicTrans2 (AI4Bharat) for Indian language translation. MMS-TTS (Meta) or IndicTTS for multilingual speech output. 
+User Benefit Bridges the language gap for Tier 2/3 city students. Huge social impact potential. 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 23 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Attribute Detail 
+Monetization Strong CSR / EdTech grant potential. Premium language packs. 
+ 
+6.4  Idea 4 – 'Concept Map' Visual Generator 
+Attribute Detail 
+Core Idea After processing a page, MATA generates an interactive concept map (mind map) showing the key concepts on the page and their relationships. The map is displayed visually in the app and can be exported as an image. 
+Why Unique Traditional mind-map tools (XMind, MindNode) require manual input. MATA auto-generates a concept map from a single camera scan of a textbook page — entirely automated. 
+Market Gap Visual learners and students who need structured note-taking benefit enormously from auto-generated concept maps, but no tool offers this from a camera scan. 
+Tech Required 
+LLM
+ 
+extracts
+ 
+key
+ 
+concepts
+ 
++
+ 
+relationships
+ 
+→
+ 
+graph-based
+ 
+rendering
+ 
+in
+ 
+Flutter
+ 
+(graphview
+ package or custom Canvas widget). Export to PNG. 
+User Benefit One-tap visual revision notes. Drastically cuts study time. 
+Monetization Shareable concept maps drive viral growth. Premium: export to PDF, cloud sync, collaborative maps. 
+ 
+6.5  Idea 5 – 'Teacher Mode' and Classroom Broadcast 
+Attribute Detail 
+Core Idea A teacher scans a textbook page on their device; MATA's explanation is instantly broadcast (via QR code or a class session code) to all students' phones in the classroom. Students can listen, ask questions, and vote on difficulty — all in real-time. 
+Why Unique Transforms MATA from a personal tool into a classroom collaboration platform. No existing EdTech app combines real-time teacher broadcast with multimodal textbook understanding. 
+Market Gap Teachers in Indian schools lack affordable, real-time interactive tools that work with physical textbooks they already use. 
+Tech Required WebSocket-based broadcast (FastAPI WebSocket), Flutter session-join via QR scan (camera 
+→
+ 
+QR
+ 
+decode),
+ 
+real-time
+ 
+difficulty
+ 
+voting
+ 
+UI. 
+User Benefit Makes MATA institutionally adoptable, not just a consumer app. Enables B2B school licensing model. 
+Monetization 
+MATA
+ 
+for
+ 
+Schools:
+ 
+institutional
+ 
+subscription
+ 
+(
+₹
+X
+ 
+per
+ 
+school
+ 
+per
+ 
+year).
+ 
+High
+ 
+LTV. 
+ 
+6.6  Idea 6 – Exam Paper Solver and Step Explainer 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 24 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Attribute Detail 
+Core Idea The student scans a previous year exam question paper or a worksheet. MATA detects each question, solves it step-by-step (for math/science), and reads the solution aloud with explanation at the selected age level. 
+Why Unique Combines OCR of question papers + LLM step-by-step reasoning + TTS — no app does all three from a camera scan. Photomath solves math but cannot explain diagrams or non-math questions, and has no TTS. 
+Market Gap Board exam students (Class 10/12) desperately need step-by-step explained solutions to past papers with audio support. 
+Tech Required Question detection (layout analysis to separate numbered items). LLM chain-of-thought prompting for step-by-step solutions. Separate TTS pass per step. 
+User Benefit One of the highest-demand features for exam preparation in India. Massive retention driver. 
+Monetization MATA Exam Prep: a separate premium mode. Partnering with exam prep companies (Byju's, Unacademy style licensing). 
+ 
+6.7  Idea 7 – Haptic Diagram Explorer (Accessibility Innovation) 
+Attribute Detail 
+Core Idea For visually impaired users, MATA provides a 'Haptic Diagram Mode': the user places a finger anywhere on the screen (which mirrors the camera capture of the diagram) and the app vibrates in patterns to indicate edges, labels, and regions. Audio announces what is at 
+the
+ 
+touched
+ 
+region
+ 
+('You
+ 
+are
+ 
+touching
+ 
+the
+ 
+nucleus
+ 
+→
+ 
+The
+ 
+nucleus
+ 
+controls
+ 
+cell
+ 
+activity'). 
+Why Unique No existing mobile app provides haptic + audio diagram exploration. Current accessible apps only describe diagrams in audio — they cannot let a blind user interactively explore diagram regions. 
+Market Gap Blind and visually impaired students have NO way to interact with diagrams in any existing tool. 
+Tech Required Diagram region segmentation (DETR bounding boxes) mapped to screen coordinates. Flutter 
+haptic
+ 
+feedback
+ 
+API
+ 
+(HapticFeedback).
+ 
+Touch
+ 
+region
+ 
+→
+ 
+nearest
+ 
+bounding
+ 
+box
+ 
+→
+ 
+audio
+ label. 
+User Benefit Breakthrough accessibility feature. Could win accessibility awards and government recognition. 
+Monetization MATA Accessibility Edition — eligible for government grants (NIEPVD, DAISY Consortium), NGO partnerships, NASSCOM Foundation. 
+ 
+6.8  Idea 8 – 'Learning Streak' Gamification + Parental Dashboard 
+Attribute Detail 
+Core Idea MATA tracks daily learning streaks (pages scanned, questions asked, concepts mastered). Students earn badges and level up. A separate Parental Dashboard app/web view lets parents see their child's study activity, subjects covered, weak areas, and Q&A history. 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 25 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Attribute Detail 
+Why Unique No accessibility-focused educational app combines gamification + parental visibility + AI textbook reading. Duolingo's streak model applied to textbook learning. 
+Market Gap Parents of visually impaired children have no visibility into what and how much their child is independently studying. 
+Tech Required Flutter gamification widgets, badge system (local SQLite), push notifications (FCM/APNS), parent web portal (React.js) consuming same backend API. 
+User Benefit Drives daily active usage (DAU). Parental dashboard makes MATA a family product, not just a student tool — increasing purchase decision power. 
+Monetization Family Plan subscription. Parental dashboard as premium feature. 
+ 
+6.9  Market Positioning Summary 
+Feature / Idea Competitor Gap Addressed Primary Audience Revenue Model 
+Core MATA (OCR + VLM + TTS) No app reads + explains textbook visuals with audio Blind students, Young learners Freemium / Pro subscription 
+Scan-and-Quiz Mode Quizlet needs manual input; no camera-based quizzing All students MATA Pro 
+Study Planner Integration No tracker tied to actual physical textbook reading Class 10–12 students Freemium Analytics 
+Vernacular Language Mode No Indian-language textbook audio explainer Tier 2/3 city India Language pack IAP / Grants 
+Concept Map Generator No auto-generated maps from camera scan Visual learners MATA Pro export feature 
+Teacher Mode / Broadcast No real-time textbook-scan classroom tool Schools, Teachers B2B school license 
+Exam Paper Solver Photomath = only math; no audio; no diagrams Board exam students MATA Exam Prep tier 
+Haptic Diagram Explorer Zero existing haptic diagram tools for blind users Visually impaired Grants + Accessibility Edition 
+Gamification + Parent Dashboard No parent visibility in accessibility EdTech Families, Parents Family Plan 
+ 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 26 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+7.  Appendices 
+Appendix A: Requirements Traceability Matrix (RTM) 
+FR Range Module Flutter Layer Backend Component Test Method 
+FR-01 to FR-12 App UI / Navigation Presentation Layer — UI Test / WCAG Audit 
+FR-13 to FR-16 Camera & Hardware Platform Channel — Device Integration Test 
+FR-17 to FR-27 API Communication Data Layer / Dio FastAPI Gateway API Contract Test 
+FR-28 to FR-34 Camera Capture & Import Presentation + Domain — Functional Test 
+FR-35 to FR-38 Preprocessing Domain + Data OpenCV / PIL service CER Evaluation 
+FR-39 to FR-44 OCR + Layout Data Layer (API call) TrOCR + LayoutLMv3 CER / WER Test 
+FR-45 to FR-51 Vision Understanding Data Layer (API call) LLaVA + DETR Human Accuracy Rating 
+FR-52 to FR-60 LLM Explanation Data Layer (API call) LLaMA / Qwen2 BLEU / ROUGE / Human 
+FR-61 to FR-66 TTS + Audio Player Presentation + Data Coqui TTS / Piper MOS Evaluation 
+FR-67 to FR-73 Interactive Q&A Presentation + Domain LLM + Context Store QA Relevance Test 
+FR-74 to FR-78 Adaptive Learning Domain + Data PostgreSQL + LLM prompt Behavioral Observation 
+FR-79 to FR-84 Profile + History Data Layer / SQLite PostgreSQL Functional Test 
+ 
+Appendix B: Technology Stack Summary 
+Category Technology Version License 
+Mobile Framework Flutter + Dart 3.x / 3.x BSD 3-Clause (Google) 
+State Management Riverpod 2.x MIT 
+HTTP Client Dio 5.x MIT 
+Local DB sqflite + Hive Latest MIT 
+Secure Storage flutter_secure_storage Latest BSD 
+Camera camera Latest BSD (Flutter) 
+On-device OCR google_mlkit_text_rec. Latest Apache 2.0 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 27 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Category Technology Version License 
+On-device TTS flutter_tts + Piper Latest MIT / Mozilla 
+PDF Rendering pdfx Latest Apache 2.0 
+Backend Framework FastAPI + Uvicorn 0.100+ / 0.18+ MIT 
+OCR (Cloud) TrOCR (Hugging Face) Latest MIT 
+Layout Analysis LayoutLMv3 Latest CC BY-NC 4.0 
+VLM (Vision) LLaVA v1.5 7B params Apache 2.0 
+LLM LLaMA-3-8B-Instruct 8B params Meta LLAMA License 
+TTS (Cloud) Coqui XTTS v2 Latest Mozilla PL 2.0 
+Math Parsing pix2tex / EDSL Latest MIT / Apache 
+Translation (Idea 3) IndicTrans2 (AI4Bharat) Latest MIT 
+Database PostgreSQL + Redis 14+ / 7+ PostgreSQL License / BSD 
+Deployment Docker + NGINX 20+ / Latest Apache 2.0 
+ 
+Appendix C: Dataset References 
+Dataset Purpose Source 
+PubLayNet / DocLayNet Document layout segmentation training & eval IBM Research 
+CROHME Mathematical expression recognition benchmark ICDAR 
+Im2LaTeX-100K Equation to LaTeX conversion Academic (OpenAI) 
+AI2D (Allen Institute) Science diagram understanding benchmark Allen AI 
+FUNSD Form understanding benchmark Research release 
+IIT-CDIP Document image OCR training corpus Illinois Institute of Tech. 
+Custom MITAOE Dataset Internal textbook page collection for testing Collected by project team 
+Bhasha Drishti / IndicOCR Indic language OCR training (for Idea 3) AI4Bharat / CDAC 
+ 
+ 
+ 
+End of Softw are Requir emen ts Specific ation
+ 
+MATA – Multimodal Accessible Textbook Assistant (Mobile Application Edition) 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 28 of 29 
+SRS – MATA Mobile Applic ation  |  IEEE Std 830-1998  |  Ver 2.0 
+Version
+ 
+2.0
+  
+|
+  
+MIT
+ 
+Academy
+ 
+of
+ 
+Engineering,
+ 
+Pune
+  
+|
+  
+Academic
+ 
+Year
+ 
+2025–2026 
+ 
+MIT Academ y of Engineering , Pune  |  AY 2025-26  |  Page 29 of 29 
