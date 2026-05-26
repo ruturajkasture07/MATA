@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MATA — UI/UX Design System 3.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-0: #060611;
+      --bg-1: #0d0d1a;
+      --bg-2: #13132a;
+      --bg-3: #1a1a35;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.08);
+      --border-glow: rgba(124,58,237,0.4);
+      --primary: #7C3AED;
+      --primary-light: #A855F7;
+      --accent: #06B6D4;
+      --accent-2: #10B981;
+      --accent-3: #F59E0B;
+      --danger: #EF4444;
+      --text-primary: #F8FAFC;
+      --text-secondary: #94A3B8;
+      --text-muted: #475569;
+      --gradient-primary: linear-gradient(135deg, #7C3AED 0%, #A855F7 50%, #06B6D4 100%);
+      --gradient-warm: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+      --gradient-cool: linear-gradient(135deg, #06B6D4 0%, #10B981 100%);
+      --gradient-card: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(6,182,212,0.08) 100%);
+      --shadow-glow: 0 0 40px rgba(124,58,237,0.25);
+      --shadow-card: 0 8px 32px rgba(0,0,0,0.4), 0 1px 1px rgba(255,255,255,0.05);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-0);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Animated Background ── */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: #7C3AED; top: -100px; left: -100px; animation-delay: 0s; }
+    .orb-2 { width: 400px; height: 400px; background: #06B6D4; bottom: 20%; right: -80px; animation-delay: 3s; }
+    .orb-3 { width: 300px; height: 300px; background: #10B981; top: 60%; left: 30%; animation-delay: 6s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    /* ── Layout ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 100px;
+      padding: 6px 16px 6px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #A855F7;
+      margin-bottom: 32px;
+      animation: pulse-border 2s ease-in-out infinite;
+    }
+    @keyframes pulse-border {
+      0%, 100% { border-color: rgba(124,58,237,0.3); }
+      50% { border-color: rgba(124,58,237,0.7); box-shadow: 0 0 20px rgba(124,58,237,0.3); }
+    }
+    .badge-dot { width: 8px; height: 8px; background: #7C3AED; border-radius: 50%; animation: blink 1.5s ease-in-out infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .hero-sub {
+      font-size: clamp(20px, 3vw, 28px);
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-bottom: 40px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 8px 16px;
+    }
+    .meta-chip span { font-size: 18px; }
+
+    /* ── Section ── */
+    section { padding: 80px 0; }
+    .section-tag {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 580px;
+      line-height: 1.7;
+    }
+    .section-header { margin-bottom: 64px; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      margin: 0;
+    }
+
+    /* ── Color Palette ── */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .swatch {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .swatch-color {
+      height: 80px;
+      position: relative;
+    }
+    .swatch-color::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3));
+    }
+    .swatch-info {
+      padding: 12px 14px;
+      background: var(--bg-2);
+    }
+    .swatch-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .swatch-hex { font-size: 12px; color: var(--text-muted); font-family: monospace; }
+    .swatch-role { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    /* ── Typography Scale ── */
+    .type-scale { display: flex; flex-direction: column; gap: 24px; }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 32px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .type-meta { min-width: 160px; }
+    .type-label { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+    .type-spec { font-size: 11px; color: var(--text-muted); font-family: monospace; margin-top: 4px; }
+    .type-sample { flex: 1; }
+
+    /* ── Screens Grid ── */
+    .screens-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 32px;
+    }
+    .screen-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+    .screen-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow), var(--shadow-card);
+      border-color: rgba(124,58,237,0.4);
+    }
+
+    /* ── Phone Mockup ── */
+    .phone-frame {
+      width: 100%;
+      aspect-ratio: 9/19;
+      background: var(--bg-1);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: var(--bg-0);
+      border-radius: 0 0 16px 16px;
+      z-index: 10;
+    }
+    .screen-content { position: relative; padding: 40px 16px 16px; height: 100%; overflow: hidden; }
+
+    /* ── Screen: Splash ── */
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 20%, rgba(124,58,237,0.6) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 80%, rgba(6,182,212,0.4) 0%, transparent 50%),
+                  #060611;
+    }
+    .splash-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .splash-logo-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-primary);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 0 40px rgba(124,58,237,0.6);
+      animation: splash-pulse 2s ease-in-out infinite;
+    }
+    @keyframes splash-pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(124,58,237,0.6); transform: scale(1); }
+      50% { box-shadow: 0 0 60px rgba(124,58,237,0.9); transform: scale(1.05); }
+    }
+    .splash-title { font-family: 'Space Grotesk', sans-serif; font-size: 36px; font-weight: 800; color: white; }
+    .splash-tagline { font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; }
+    .splash-loader {
+      width: 120px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .splash-loader-fill {
+      height: 100%;
+      width: 60%;
+      background: var(--gradient-primary);
+      border-radius: 2px;
+      animation: slide-right 1.5s ease-in-out infinite;
+    }
+    @keyframes slide-right {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+
+    /* ── Screen: Home ── */
+    .home-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.3) 0%, transparent 60%),
+                  #060611;
+    }
+    .home-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .home-appbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      margin-bottom: 24px;
+    }
+    .appbar-greeting { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .appbar-name { font-size: 15px; font-weight: 700; color: white; }
+    .avatar-sm {
+      width: 32px; height: 32px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .home-scan-card {
+      flex: 1;
+      background: var(--gradient-primary);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(124,58,237,0.5);
+      min-height: 0;
+    }
+    .home-scan-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    }
+    .scan-icon { font-size: 48px; position: relative; z-index: 1; }
+    .scan-title { font-size: 14px; font-weight: 800; color: white; text-align: center; position: relative; z-index: 1; letter-spacing: 0.5px; }
+    .scan-hint { font-size: 10px; color: rgba(255,255,255,0.7); text-align: center; position: relative; z-index: 1; }
+    .home-bottom-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .mini-card {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mini-card-icon { font-size: 18px; }
+    .mini-card-text { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 600; line-height: 1.3; }
+    .home-mark-fab {
+      position: absolute;
+      bottom: 60px;
+      right: 12px;
+      width: 44px;
+      height: 44px;
+      background: var(--gradient-warm);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 8px 24px rgba(239,68,68,0.4);
+      animation: fab-float 3s ease-in-out infinite;
+    }
+    @keyframes fab-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .bottom-nav-mini {
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 4px;
+      border-top: 1px solid var(--border);
+    }
+    .nav-item-mini {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      font-size: 7px;
+      color: rgba(255,255,255,0.4);
+    }
+    .nav-item-mini.active { color: #A855F7; }
+    .nav-icon-mini { font-size: 16px; }
+
+    /* ── Screen: Camera ── */
+    .cam-bg {
+      position: absolute;
+      inset: 0;
+      background: #000;
+    }
+    .cam-viewfinder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 30%;
+      background: linear-gradient(135deg, #1a2030 0%, #0d1520 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cam-viewfinder-inner {
+      width: 80%;
+      height: 70%;
+      border: 2px solid rgba(124,58,237,0.8);
+      border-radius: 12px;
+      position: relative;
+    }
+    .cam-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: #A855F7;
+      border-style: solid;
+    }
+    .cam-corner.tl { top: -2px; left: -2px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+    .cam-corner.tr { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+    .cam-corner.bl { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+    .cam-corner.br { bottom: -2px; right: -2px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+    .cam-text { font-size: 10px; color: rgba(255,255,255,0.6); margin-top: 8px; text-align: center; }
+    .cam-capture-zone {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 30%;
+      background: linear-gradient(to top, rgba(124,58,237,0.95), rgba(124,58,237,0.7));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .capture-btn {
+      width: 56px;
+      height: 56px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.3);
+    }
+    .cam-hint { font-size: 10px; color: rgba(255,255,255,0.8); font-weight: 600; }
+    .cam-back-btn {
+      position: absolute;
+      top: 36px;
+      left: 12px;
+      width: 32px;
+      height: 32px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    /* ── Screen: Config ── */
+    .config-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.25) 0%, transparent 50%), #060611;
+    }
+    .config-content { position: relative; z-index: 1; height: 100%; padding: 8px 0; overflow-y: auto; }
+    .config-title { font-size: 16px; font-weight: 800; color: white; margin-bottom: 4px; }
+    .config-sub { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .level-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .level-card.selected { border-color: #A855F7; background: rgba(168,85,247,0.12); }
+    .level-emoji { font-size: 24px; }
+    .level-name { font-size: 12px; font-weight: 700; color: white; }
+    .level-desc { font-size: 9px; color: rgba(255,255,255,0.5); }
+    .level-check { margin-left: auto; font-size: 16px; }
+    .process-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      box-shadow: 0 8px 24px rgba(124,58,237,0.4);
+    }
+
+    /* ── Screen: Result ── */
+    .result-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% -10%, rgba(6,182,212,0.3) 0%, transparent 50%), #060611;
+    }
+    .result-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; }
+    .result-appbar { font-size: 13px; font-weight: 800; color: white; text-align: center; padding: 8px 0 16px; }
+    .explanation-card {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .audio-controls {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .ctrl-btn { font-size: 18px; opacity: 0.7; }
+    .play-btn {
+      width: 40px; height: 40px;
+      background: var(--gradient-cool);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(6,182,212,0.4);
+    }
+    .ask-mark-btn {
+      width: 100%;
+      padding: 10px;
+      background: linear-gradient(135deg, #7C3AED, #EC4899);
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 6px 20px rgba(124,58,237,0.4);
+    }
+
+    /* ── Screen: Chat ── */
+    .chat-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.2) 0%, transparent 50%), #060611;
+    }
+    .chat-content { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; }
+    .chat-mark-avatar {
+      width: 56px; height: 56px;
+      background: var(--gradient-cool);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 8px;
+      box-shadow: 0 0 30px rgba(6,182,212,0.4);
+      animation: mark-pulse 2s ease-in-out infinite;
+    }
+    @keyframes mark-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(6,182,212,0.4); }
+      50% { box-shadow: 0 0 40px rgba(6,182,212,0.7); }
+    }
+    .chat-status { text-align: center; font-size: 10px; color: #06B6D4; font-weight: 600; margin-bottom: 12px; }
+    .chat-bubbles { flex: 1; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+    .bubble { max-width: 85%; padding: 8px 10px; font-size: 9px; line-height: 1.5; color: white; border-radius: 12px; }
+    .bubble.bot { background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-bottom-left-radius: 4px; align-self: flex-start; }
+    .bubble.user { background: linear-gradient(135deg, #7C3AED, #5B21B6); border-bottom-right-radius: 4px; align-self: flex-end; }
+    .hold-talk-btn {
+      margin-top: auto;
+      padding: 10px;
+      background: linear-gradient(135deg, #10B981, #047857);
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      color: white;
+      text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+    }
+
+    /* ── Screen: History ── */
+    .hist-bg { position: absolute; inset: 0; background: #060611; }
+    .hist-content { position: relative; z-index: 1; height: 100%; }
+    .hist-header { margin-bottom: 12px; }
+    .hist-title { font-size: 15px; font-weight: 800; color: white; }
+    .hist-filter {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      overflow-x: auto;
+    }
+    .filter-chip {
+      white-space: nowrap;
+      font-size: 9px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,0.5);
+      background: var(--surface);
+    }
+    .filter-chip.active {
+      background: rgba(124,58,237,0.2);
+      border-color: #7C3AED;
+      color: #A855F7;
+    }
+    .hist-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hist-icon { font-size: 22px; }
+    .hist-item-title { font-size: 11px; font-weight: 700; color: white; }
+    .hist-item-sub { font-size: 9px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .hist-item-badge {
+      margin-left: auto;
+      font-size: 8px;
+      padding: 2px 6px;
+      border-radius: 100px;
+      background: rgba(6,182,212,0.15);
+      color: #06B6D4;
+      font-weight: 600;
+    }
+
+    /* ── Screen: Profile ── */
+    .prof-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.4) 0%, transparent 50%), #060611;
+    }
+    .prof-content { position: relative; z-index: 1; height: 100%; }
+    .prof-cover {
+      height: 70px;
+      background: var(--gradient-primary);
+      border-radius: 16px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .prof-avatar {
+      width: 56px; height: 56px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg-1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .prof-name { text-align: center; font-size: 14px; font-weight: 800; color: white; margin-bottom: 2px; }
+    .prof-username { text-align: center; font-size: 10px; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .prof-stats {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .stat-box {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-num { font-size: 16px; font-weight: 800; color: white; }
+    .stat-lbl { font-size: 8px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .prof-menu-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-icon-wrap {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .menu-title { font-size: 11px; font-weight: 600; color: white; }
+    .menu-chevron { margin-left: auto; font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    /* ── Card meta ── */
+    .screen-meta { padding: 20px 24px 24px; }
+    .screen-number { font-size: 11px; font-weight: 700; color: #7C3AED; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+    .screen-name { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    .screen-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; }
+    .screen-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.25);
+      color: #A855F7;
+      font-weight: 500;
+    }
+
+    /* ── Design Principles ── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .principle-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .principle-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124,58,237,0.4);
+    }
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-primary);
+      opacity: 0.5;
+    }
+    .principle-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: rgba(124,58,237,0.15);
+      line-height: 1;
+      margin-bottom: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .principle-icon { font-size: 32px; margin-bottom: 16px; }
+    .principle-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+    .principle-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ── Gestures ── */
+    .gestures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .gesture-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .gesture-card:hover { border-color: rgba(124,58,237,0.4); background: var(--surface-hover); }
+    .gesture-icon {
+      width: 64px; height: 64px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 16px;
+      box-shadow: var(--shadow-glow);
+    }
+    .gesture-name { font-weight: 700; font-size: 16px; color: var(--text-primary); margin-bottom: 8px; }
+    .gesture-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── Spacing System ── */
+    .spacing-grid { display: flex; flex-direction: column; gap: 16px; }
+    .spacing-row { display: flex; align-items: center; gap: 20px; }
+    .spacing-bar-wrap { flex: 1; background: var(--bg-3); border-radius: 4px; height: 20px; overflow: hidden; }
+    .spacing-bar { height: 100%; background: var(--gradient-primary); border-radius: 4px; }
+    .spacing-label { min-width: 60px; font-size: 13px; font-weight: 700; color: var(--text-primary); }
+    .spacing-value { min-width: 80px; font-size: 12px; color: var(--text-muted); font-family: monospace; }
+
+    /* ── Component System ── */
+    .components-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .comp-section { }
+    .comp-title { font-size: 16px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; font-size: 12px; margin-bottom: 20px; }
+    .btn-demo { display: flex; flex-direction: column; gap: 12px; }
+    .btn-sample {
+      padding: 14px 24px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--gradient-primary); color: white; box-shadow: 0 8px 24px rgba(124,58,237,0.4); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(124,58,237,0.5); }
+    .btn-secondary { background: var(--surface); color: var(--text-primary); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: rgba(124,58,237,0.4); background: var(--surface-hover); }
+    .btn-danger { background: linear-gradient(135deg, #EF4444, #B91C1C); color: white; box-shadow: 0 8px 24px rgba(239,68,68,0.3); }
+    .btn-accent { background: var(--gradient-cool); color: white; box-shadow: 0 8px 24px rgba(6,182,212,0.3); }
+    .input-demo { display: flex; flex-direction: column; gap: 12px; }
+    .input-sample {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-size: 15px;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+    .input-sample:focus { border-color: #7C3AED; outline: none; box-shadow: 0 0 0 4px rgba(124,58,237,0.15); background: var(--surface-hover); }
+    .input-sample::placeholder { color: var(--text-muted); }
+
+    /* ── A11y Section ── */
+    .a11y-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .a11y-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      border-left: 4px solid;
+    }
+    .a11y-card.vision { border-left-color: #7C3AED; }
+    .a11y-card.audio { border-left-color: #06B6D4; }
+    .a11y-card.motor { border-left-color: #10B981; }
+    .a11y-card.cognitive { border-left-color: #F59E0B; }
+    .a11y-card-icon { font-size: 32px; margin-bottom: 12px; }
+    .a11y-card-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    .a11y-feature-list { list-style: none; }
+    .a11y-feature-list li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .a11y-feature-list li:last-child { border-bottom: none; }
+    .a11y-feature-list li::before { content: '→'; color: #7C3AED; flex-shrink: 0; }
+
+    /* ── Motion Design ── */
+    .motion-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .motion-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .motion-demo {
+      height: 60px;
+      background: var(--bg-3);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .motion-dot {
+      width: 20px;
+      height: 20px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+    }
+    .anim-1 { animation: slide-in 2s ease-out infinite; }
+    .anim-2 { animation: scale-in 1.5s ease-out infinite; }
+    .anim-3 { animation: fade-in-anim 1.5s ease-out infinite; }
+    @keyframes slide-in { 0%, 100% { transform: translateX(-30px); opacity: 0; } 40%, 60% { transform: translateX(0); opacity: 1; } }
+    @keyframes scale-in { 0%, 100% { transform: scale(0.3); opacity: 0; } 40%, 60% { transform: scale(1); opacity: 1; } }
+    @keyframes fade-in-anim { 0%, 100% { opacity: 0; transform: translateY(10px); } 40%, 60% { opacity: 1; transform: translateY(0); } }
+    .motion-name { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+    .motion-spec { font-size: 12px; color: var(--text-muted); font-family: monospace; }
+
+    /* ── Implementation Guide ── */
+    .impl-steps { display: flex; flex-direction: column; gap: 0; }
+    .impl-step {
+      display: flex;
+      gap: 24px;
+      position: relative;
+    }
+    .impl-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 56px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(124,58,237,0.4), rgba(124,58,237,0.1));
+    }
+    .impl-num {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+      z-index: 1;
+      position: relative;
+    }
+    .impl-body { padding-bottom: 40px; flex: 1; }
+    .impl-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; padding-top: 8px; }
+    .impl-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .code-block {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: #A855F7;
+      margin-top: 12px;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 60px 0 40px;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .footer-logo { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px; }
+    .footer-text { font-size: 14px; color: var(--text-muted); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .screens-grid { grid-template-columns: 1fr; }
+      .components-grid { grid-template-columns: 1fr; }
+      .motion-grid { grid-template-columns: 1fr; }
+      .hero h1 { letter-spacing: -1px; }
+    }
+    @media (max-width: 600px) {
+      .principles-grid { grid-template-columns: 1fr; }
+      .gestures-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<div class="container">
+  <section class="hero">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      UI/UX Design System — Version 3.0
+    </div>
+    <h1>MATA · MARK</h1>
+    <p class="hero-sub">A world-class UI/UX redesign for the Multimodal Accessible Textbook Assistant — crafted for every student, especially those who see with their ears.</p>
+    <div class="hero-meta">
+      <div class="meta-chip"><span>📱</span> Flutter (Dart)</div>
+      <div class="meta-chip"><span>♿</span> WCAG 2.1 AA</div>
+      <div class="meta-chip"><span>🌙</span> Dark-First Design</div>
+      <div class="meta-chip"><span>🎙️</span> Voice-Native</div>
+      <div class="meta-chip"><span>⚡</span> Micro-Animated</div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ DESIGN PRINCIPLES ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Foundation</div>
+      <h2 class="section-title">Design Principles</h2>
+      <p class="section-desc">Six core beliefs that drive every pixel, every animation, and every interaction in MATA.</p>
+    </div>
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">01</div>
+        <div class="principle-icon">👁️</div>
+        <div class="principle-title">Blind-First Design</div>
+        <p class="principle-desc">Every screen must work perfectly without looking at it. If a visually impaired user can't navigate purely by touch and sound, the design has failed.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">02</div>
+        <div class="principle-icon">🎯</div>
+        <div class="principle-title">One Action Per Screen</div>
+        <p class="principle-desc">Each screen has one massive, unmissable primary action. No cognitive overload. No hunting for buttons. Tap anywhere to hear what to do.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">03</div>
+        <div class="principle-icon">✨</div>
+        <div class="principle-title">Premium by Default</div>
+        <p class="principle-desc">Students deserve beautiful tools. Deep space backgrounds, vibrant gradients, glassmorphism, and fluid animations make learning feel exciting — not clinical.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">04</div>
+        <div class="principle-icon">⚡</div>
+        <div class="principle-title">Instant Feedback</div>
+        <p class="principle-desc">Every action gets immediate visual + haptic + audio response within 100ms. Users should never wonder "did that work?" — they should know.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">05</div>
+        <div class="principle-icon">🔊</div>
+        <div class="principle-title">Voice as Primary Input</div>
+        <p class="principle-desc">Voice commands, Q&A, and navigation are first-class features — not afterthoughts. The entire app should be operable without ever typing.</p>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">06</div>
+        <div class="principle-icon">🧒</div>
+        <div class="principle-title">Age-Adaptive UI</div>
+        <p class="principle-desc">The interface subtly adapts to the selected learning mode. Child mode: rounder, warmer, more emoji. Adult mode: crisper, more information-dense.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ COLOR PALETTE ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Visual Language</div>
+      <h2 class="section-title">Color System</h2>
+      <p class="section-desc">A cosmic dark palette with vibrant accent colors — high-contrast, WCAG AA compliant, and emotionally resonant.</p>
+    </div>
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#7C3AED;"></div>
+        <div class="swatch-info"><div class="swatch-name">Violet Core</div><div class="swatch-hex">#7C3AED</div><div class="swatch-role">Primary brand, CTAs, active states</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#A855F7;"></div>
+        <div class="swatch-info"><div class="swatch-name">Violet Light</div><div class="swatch-hex">#A855F7</div><div class="swatch-role">Hover states, secondary actions</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:linear-gradient(135deg,#7C3AED,#A855F7,#06B6D4);"></div>
+        <div class="swatch-info"><div class="swatch-name">MATA Gradient</div><div class="swatch-hex">Violet → Cyan</div><div class="swatch-role">Hero elements, logos, primary buttons</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#06B6D4;"></div>
+        <div class="swatch-info"><div class="swatch-name">Cyan</div><div class="swatch-hex">#06B6D4</div><div class="swatch-role">MARK AI bot, audio controls</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#10B981;"></div>
+        <div class="swatch-info"><div class="swatch-name">Emerald</div><div class="swatch-hex">#10B981</div><div class="swatch-role">Success, "Good" feedback, speak button</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F59E0B;"></div>
+        <div class="swatch-info"><div class="swatch-name">Amber</div><div class="swatch-hex">#F59E0B</div><div class="swatch-role">MARK thinking state, warnings</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#EF4444;"></div>
+        <div class="swatch-info"><div class="swatch-name">Red</div><div class="swatch-hex">#EF4444</div><div class="swatch-role">Destructive actions, "Too Hard" feedback</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#060611;"></div>
+        <div class="swatch-info"><div class="swatch-name">Deep Space</div><div class="swatch-hex">#060611</div><div class="swatch-role">App background, deepest layer</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#0d0d1a;"></div>
+        <div class="swatch-info"><div class="swatch-name">Space Dark</div><div class="swatch-hex">#0d0d1a</div><div class="swatch-role">Card backgrounds</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1a1a35;"></div>
+        <div class="swatch-info"><div class="swatch-name">Space Mid</div><div class="swatch-hex">#1a1a35</div><div class="swatch-role">Elevated surfaces, inputs</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#94A3B8;"></div>
+        <div class="swatch-info"><div class="swatch-name">Slate</div><div class="swatch-hex">#94A3B8</div><div class="swatch-role">Secondary text, labels</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F8FAFC;"></div>
+        <div class="swatch-info"><div class="swatch-name">Snow White</div><div class="swatch-hex">#F8FAFC</div><div class="swatch-role">Primary text (large content)</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ TYPOGRAPHY ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Visual Language</div>
+      <h2 class="section-title">Typography Scale</h2>
+      <p class="section-desc">Inter (body) + Space Grotesk (headings). All sizes optimized for accessibility — minimum 16px for legibility.</p>
+    </div>
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Display XL</div><div class="type-spec">Space Grotesk 72px 800</div></div>
+        <div class="type-sample"><span style="font-family:'Space Grotesk',sans-serif;font-size:42px;font-weight:800;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">MATA</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Display LG</div><div class="type-spec">Space Grotesk 48px 700</div></div>
+        <div class="type-sample"><span style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;">Learning Space</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Heading H1</div><div class="type-spec">Space Grotesk 36px 700</div></div>
+        <div class="type-sample"><span style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;">Scan or Upload Page</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Heading H2</div><div class="type-spec">Inter 28px 700</div></div>
+        <div class="type-sample"><span style="font-size:22px;font-weight:700;">Select Difficulty Level</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Body XL</div><div class="type-spec">Inter 24px 500</div></div>
+        <div class="type-sample"><span style="font-size:18px;font-weight:500;color:#94A3B8;line-height:1.7;">Explanation text for the scanned textbook page, read aloud at 0.5x speed for maximum comprehension.</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Body MD</div><div class="type-spec">Inter 18px 400</div></div>
+        <div class="type-sample"><span style="font-size:16px;color:#94A3B8;">Chat bubble text, setting labels, and secondary content areas.</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-label">Caption</div><div class="type-spec">Inter 13px 500</div></div>
+        <div class="type-sample"><span style="font-size:13px;color:#475569;text-transform:uppercase;letter-spacing:2px;">ACCESSIBILITY · SCIENCE · 2026-04-20</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ SCREENS ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Screen Designs</div>
+      <h2 class="section-title">Every Screen — Redesigned</h2>
+      <p class="section-desc">Interactive phone mockups showing the new MATA design system in action. Hover each card to see the elevation effect.</p>
+    </div>
+    <div class="screens-grid">
+
+      <!-- Screen 1: Splash -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="splash-bg"></div>
+          <div class="screen-content">
+            <div class="splash-logo-wrap">
+              <div class="splash-logo-icon">👁️</div>
+              <div class="splash-title">MATA</div>
+              <div class="splash-tagline">Your AI Textbook<br/>Reading Companion</div>
+              <div class="splash-loader"><div class="splash-loader-fill"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 01</div>
+          <div class="screen-name">Splash Screen</div>
+          <p class="screen-desc">Instantly narrates: "Welcome to MATA. Loading your learning companion." Logo pulses gently. Progress bar slides across the bottom.</p>
+          <div class="screen-tags">
+            <span class="tag">Auto-narrate</span><span class="tag">Animated logo</span><span class="tag">1.5s load</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 2: Home -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="home-bg"></div>
+          <div class="screen-content">
+            <div class="home-content">
+              <div class="home-appbar">
+                <div><div class="appbar-greeting">Good morning,</div><div class="appbar-name">Ruturaj 👋</div></div>
+                <div class="avatar-sm">R</div>
+              </div>
+              <div class="home-scan-card">
+                <div class="scan-icon">📸</div>
+                <div class="scan-title">Scan Page</div>
+                <div class="scan-hint">Double-tap or say "Scan"</div>
+              </div>
+              <div class="home-bottom-row">
+                <div class="mini-card"><div class="mini-card-icon">📁</div><div class="mini-card-text">Upload<br/>File</div></div>
+                <div class="mini-card"><div class="mini-card-icon">📜</div><div class="mini-card-text">History<br/>5 sessions</div></div>
+                <div class="mini-card"><div class="mini-card-icon">⭐</div><div class="mini-card-text">Saved<br/>3 items</div></div>
+              </div>
+              <div class="bottom-nav-mini">
+                <div class="nav-item-mini active"><div class="nav-icon-mini">🏠</div>Home</div>
+                <div class="nav-item-mini"><div class="nav-icon-mini">📜</div>History</div>
+                <div class="nav-item-mini"><div class="nav-icon-mini">👤</div>Profile</div>
+                <div class="nav-item-mini"><div class="nav-icon-mini">⚙️</div>Settings</div>
+              </div>
+              <div class="home-mark-fab">🎙️</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 02</div>
+          <div class="screen-name">Home Dashboard</div>
+          <p class="screen-desc">Personalized greeting with username. Giant scan card fills 60% of screen. Quick-access tiles for Upload, History, Saved. MARK FAB pulses in corner.</p>
+          <div class="screen-tags">
+            <span class="tag">Personalized</span><span class="tag">Voice nav</span><span class="tag">Quick tiles</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 3: Camera -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="cam-bg"></div>
+          <div class="screen-content" style="padding:0">
+            <div class="cam-viewfinder">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;">
+                <div class="cam-viewfinder-inner">
+                  <div class="cam-corner tl"></div><div class="cam-corner tr"></div>
+                  <div class="cam-corner bl"></div><div class="cam-corner br"></div>
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,0.15);">📖</div>
+                </div>
+                <div class="cam-text">Edges detected ✓</div>
+              </div>
+            </div>
+            <div class="cam-capture-zone">
+              <div class="capture-btn">📷</div>
+              <div class="cam-hint">Double-tap to capture</div>
+            </div>
+            <div class="cam-back-btn">←</div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 03</div>
+          <div class="screen-name">Camera Capture</div>
+          <p class="screen-desc">Full-screen viewfinder. Animated corner brackets highlight detected page edges. "Edges detected ✓" with haptic. Huge capture zone — 1/3 of screen height.</p>
+          <div class="screen-tags">
+            <span class="tag">Edge detection</span><span class="tag">Haptic feedback</span><span class="tag">Auto-capture</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 4: Config -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="config-bg"></div>
+          <div class="screen-content">
+            <div class="config-content">
+              <div class="config-title">Reading Level</div>
+              <div class="config-sub">How should MARK explain this page?</div>
+              <div class="level-card">
+                <div class="level-emoji">🐣</div>
+                <div><div class="level-name">Child (Age 8–12)</div><div class="level-desc">Simple words, fun analogies</div></div>
+              </div>
+              <div class="level-card selected">
+                <div class="level-emoji">📚</div>
+                <div><div class="level-name">Teen (Age 13–16)</div><div class="level-desc">Standard school vocabulary</div></div>
+                <div class="level-check">✅</div>
+              </div>
+              <div class="level-card">
+                <div class="level-emoji">🎓</div>
+                <div><div class="level-name">Adult / Expert</div><div class="level-desc">Technical college-level</div></div>
+              </div>
+              <div class="process-btn">▶ ANALYZE WITH AI</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 04</div>
+          <div class="screen-name">Reading Level</div>
+          <p class="screen-desc">Three large cards with emoji + age range + description. Selected card glows purple. Narrator reads each option on touch. Single large CTA button.</p>
+          <div class="screen-tags">
+            <span class="tag">3 modes</span><span class="tag">Animated selection</span><span class="tag">Narrated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 5: Result / Learning Space -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="result-bg"></div>
+          <div class="screen-content">
+            <div class="result-content">
+              <div class="result-appbar">✨ Learning Space</div>
+              <div class="explanation-card">
+                Photosynthesis is how plants make their own food using sunlight. The green leaves act like tiny solar panels. They capture light energy and use it to transform water and carbon dioxide into glucose — sugar that powers the plant. The byproduct is oxygen, which is what we breathe! Think of every tree as a silent factory running on sunlight...
+              </div>
+              <div class="audio-controls">
+                <div class="ctrl-btn">⏪</div>
+                <div class="play-btn">⏸️</div>
+                <div class="ctrl-btn">⏩</div>
+                <div style="font-size:10px;color:#06B6D4;font-weight:600;">0.5×</div>
+              </div>
+              <div class="ask-mark-btn">🎙️ Ask MARK a Question</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 05</div>
+          <div class="screen-name">Learning Space</div>
+          <p class="screen-desc">Explanation fills most of screen in large readable text. Audio bar with rewind/play/forward/speed controls. "Ask MARK" CTA at bottom with gradient glow.</p>
+          <div class="screen-tags">
+            <span class="tag">Auto-play TTS</span><span class="tag">Speed control</span><span class="tag">Ask MARK</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 6: MARK Chat -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="chat-bg"></div>
+          <div class="screen-content">
+            <div class="chat-content">
+              <div class="chat-mark-avatar">🤖</div>
+              <div class="chat-status">MARK is listening...</div>
+              <div class="chat-bubbles">
+                <div class="bubble bot">What is the role of chlorophyll in photosynthesis?</div>
+                <div class="bubble user">Why do leaves turn green?</div>
+                <div class="bubble bot">Leaves appear green because chlorophyll absorbs red and blue light but reflects green light back to your eyes! 🌿</div>
+              </div>
+              <div class="hold-talk-btn">🎙️ Hold to Talk</div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 06</div>
+          <div class="screen-name">MARK Q&amp;A Chat</div>
+          <p class="screen-desc">MARK avatar pulses with cyan glow. Chat bubbles appear with slide-in animation. "Hold to Talk" turns red while recording. MARK narrates every answer.</p>
+          <div class="screen-tags">
+            <span class="tag">Voice Q&A</span><span class="tag">Chat bubbles</span><span class="tag">Context-aware</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 7: History -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="hist-bg"></div>
+          <div class="screen-content">
+            <div class="hist-content">
+              <div class="hist-header">
+                <div class="hist-title">📜 Learning History</div>
+                <div class="hist-filter">
+                  <div class="filter-chip active">All</div>
+                  <div class="filter-chip">Science</div>
+                  <div class="filter-chip">Maths</div>
+                  <div class="filter-chip">History</div>
+                </div>
+              </div>
+              <div class="hist-item">
+                <div class="hist-icon">⚗️</div>
+                <div><div class="hist-item-title">Photosynthesis</div><div class="hist-item-sub">Today · Teen level</div></div>
+                <div class="hist-item-badge">Replay</div>
+              </div>
+              <div class="hist-item">
+                <div class="hist-icon">📐</div>
+                <div><div class="hist-item-title">Pythagorean Theorem</div><div class="hist-item-sub">Yesterday · Child level</div></div>
+                <div class="hist-item-badge">Replay</div>
+              </div>
+              <div class="hist-item">
+                <div class="hist-icon">🌍</div>
+                <div><div class="hist-item-title">World War II Timeline</div><div class="hist-item-sub">2 days ago · Adult</div></div>
+                <div class="hist-item-badge">Replay</div>
+              </div>
+              <div class="hist-item">
+                <div class="hist-icon">🔬</div>
+                <div><div class="hist-item-title">Cell Division</div><div class="hist-item-sub">Apr 22 · Teen level</div></div>
+                <div class="hist-item-badge">Replay</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 07</div>
+          <div class="screen-name">Learning History</div>
+          <p class="screen-desc">Real data from API. Filter chips by subject. Each item shows topic emoji, topic title, date, and level. "Replay" badge re-opens the Learning Space for that session.</p>
+          <div class="screen-tags">
+            <span class="tag">Real API data</span><span class="tag">Filter chips</span><span class="tag">Replay sessions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 8: Profile -->
+      <div class="screen-card">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="prof-bg"></div>
+          <div class="screen-content">
+            <div class="prof-content">
+              <div class="prof-cover">
+                <div class="prof-avatar">🎓</div>
+              </div>
+              <div class="prof-name">Ruturaj Kasture</div>
+              <div class="prof-username">@ruturaj · Teen Learner</div>
+              <div class="prof-stats">
+                <div class="stat-box"><div class="stat-num">47</div><div class="stat-lbl">Pages Scanned</div></div>
+                <div class="stat-box"><div class="stat-num">12</div><div class="stat-lbl">Questions Asked</div></div>
+                <div class="stat-box"><div class="stat-num">5🔥</div><div class="stat-lbl">Day Streak</div></div>
+              </div>
+              <div class="prof-menu-item">
+                <div class="menu-icon-wrap" style="background:rgba(124,58,237,0.2);">♿</div>
+                <div class="menu-title">Accessibility Settings</div>
+                <div class="menu-chevron">›</div>
+              </div>
+              <div class="prof-menu-item">
+                <div class="menu-icon-wrap" style="background:rgba(6,182,212,0.2);">🔊</div>
+                <div class="menu-title">Voice & Audio</div>
+                <div class="menu-chevron">›</div>
+              </div>
+              <div class="prof-menu-item" style="border-color:rgba(239,68,68,0.3);">
+                <div class="menu-icon-wrap" style="background:rgba(239,68,68,0.15);">🚪</div>
+                <div class="menu-title" style="color:#EF4444;">Log Out</div>
+                <div class="menu-chevron" style="color:#EF4444;">›</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="screen-meta">
+          <div class="screen-number">Screen 08</div>
+          <div class="screen-name">Profile</div>
+          <p class="screen-desc">Cover photo gradient. Avatar with emoji. Real stats: pages scanned, questions, streak. Actionable menu rows. Quick access to accessibility settings.</p>
+          <div class="screen-tags">
+            <span class="tag">Live stats</span><span class="tag">Streak counter</span><span class="tag">A11y settings</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ GESTURE SYSTEM ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Interaction Design</div>
+      <h2 class="section-title">Gesture Language</h2>
+      <p class="section-desc">A complete, consistent gesture vocabulary that works for both sighted and visually impaired users — no visual memory required.</p>
+    </div>
+    <div class="gestures-grid">
+      <div class="gesture-card">
+        <div class="gesture-icon">☝️</div>
+        <div class="gesture-name">Single Tap</div>
+        <p class="gesture-desc">Reads the element label aloud via NarratorService. Explores without activating.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">👆👆</div>
+        <div class="gesture-name">Double Tap</div>
+        <p class="gesture-desc">Activates the selected element — opens screens, presses buttons, confirms actions.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">✋</div>
+        <div class="gesture-name">Long Press</div>
+        <p class="gesture-desc">Hold to talk — starts voice recording in Q&A chat. Release to send the voice input.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">👋</div>
+        <div class="gesture-name">Swipe Left/Right</div>
+        <p class="gesture-desc">Navigate between bottom tabs. Swipe left = next tab; swipe right = previous tab.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">☝️☝️</div>
+        <div class="gesture-name">Two-Finger Swipe Up</div>
+        <p class="gesture-desc">Trigger camera scan from any screen. Global shortcut — no navigation required.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">🤙</div>
+        <div class="gesture-name">Shake Phone</div>
+        <p class="gesture-desc">Invoke MARK from anywhere. Shake = "Hey MARK!" — no need to find the FAB button.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">🤏</div>
+        <div class="gesture-name">Pinch In</div>
+        <p class="gesture-desc">Decrease TTS speech speed (→ 0.3x). Useful for complex technical explanations.</p>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">🤙🤙</div>
+        <div class="gesture-name">Pinch Out</div>
+        <p class="gesture-desc">Increase TTS speech speed (→ 1.5x or 2x). Useful for review or familiar content.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ COMPONENT SYSTEM ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Component Library</div>
+      <h2 class="section-title">UI Components</h2>
+      <p class="section-desc">Reusable, accessible, beautifully styled components built with glassmorphism and the MATA design token system.</p>
+    </div>
+    <div class="components-grid">
+      <div class="comp-section">
+        <div class="comp-title">Buttons</div>
+        <div class="btn-demo">
+          <div class="btn-sample btn-primary">▶ SCAN OR UPLOAD PAGE</div>
+          <div class="btn-sample btn-accent">🎙️ Ask MARK a Question</div>
+          <div class="btn-sample btn-secondary">Select Reading Level</div>
+          <div class="btn-sample btn-danger">🚪 Log Out</div>
+        </div>
+      </div>
+      <div class="comp-section">
+        <div class="comp-title">Form Inputs</div>
+        <div class="input-demo">
+          <input type="text" class="input-sample" placeholder="Username" />
+          <input type="password" class="input-sample" placeholder="Password" />
+          <input type="email" class="input-sample" placeholder="Email address" />
+          <input type="text" class="input-sample" placeholder="🔍 Search your history..." />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ SPACING SYSTEM ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Spatial System</div>
+      <h2 class="section-title">Spacing & Radius</h2>
+      <p class="section-desc">An 8px base grid ensures consistent visual rhythm. All border-radius values optimized for large touch targets.</p>
+    </div>
+    <div class="spacing-grid">
+      <div class="spacing-row">
+        <div class="spacing-label">XS</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:5%;"></div></div>
+        <div class="spacing-value">4px / 0.5</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">SM</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:10%;"></div></div>
+        <div class="spacing-value">8px / 1</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">MD</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:15%;"></div></div>
+        <div class="spacing-value">12px / 1.5</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">LG</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:20%;"></div></div>
+        <div class="spacing-value">16px / 2</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">XL</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:30%;"></div></div>
+        <div class="spacing-value">24px / 3</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">2XL</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:40%;"></div></div>
+        <div class="spacing-value">32px / 4</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">3XL</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:60%;"></div></div>
+        <div class="spacing-value">48px / 6</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">4XL</div>
+        <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80%;"></div></div>
+        <div class="spacing-value">64px / 8</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ MOTION DESIGN ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Motion Design</div>
+      <h2 class="section-title">Animation System</h2>
+      <p class="section-desc">Every animation has a purpose. Entrances orient users. Loops indicate state. Exits confirm actions. Nothing animates for decoration alone.</p>
+    </div>
+    <div class="motion-grid">
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-dot anim-1"></div></div>
+        <div class="motion-name">Slide In</div>
+        <div class="motion-spec">duration: 500ms<br/>curve: easeOutCubic<br/>use: screen entrances</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-dot anim-2"></div></div>
+        <div class="motion-name">Scale Up</div>
+        <div class="motion-spec">duration: 300ms<br/>curve: easeOutBack<br/>use: button press, icons</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-dot anim-3"></div></div>
+        <div class="motion-name">Fade In Up</div>
+        <div class="motion-spec">duration: 400ms<br/>curve: easeOut<br/>use: cards, text reveals</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-dot" style="animation:fab-float 2s ease-in-out infinite;background:linear-gradient(135deg,#F59E0B,#EF4444);"></div></div>
+        <div class="motion-name">Float Loop</div>
+        <div class="motion-spec">duration: 2–3s infinite<br/>curve: easeInOut<br/>use: FAB, avatars, logos</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="motion-dot" style="animation:splash-pulse 1.5s ease-in-out infinite;background:linear-gradient(135deg,#06B6D4,#10B981);"></div></div>
+        <div class="motion-name">Pulse Glow</div>
+        <div class="motion-spec">duration: 1.5s infinite<br/>via boxShadow change<br/>use: MARK avatar, scan</div>
+      </div>
+      <div class="motion-card">
+        <div class="motion-demo"><div class="splash-loader"><div class="splash-loader-fill"></div></div></div>
+        <div class="motion-name">Progress Shimmer</div>
+        <div class="motion-spec">duration: 1.5s infinite<br/>translateX(-100→200%)<br/>use: loading states</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ ACCESSIBILITY DEEP-DIVE ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Accessibility</div>
+      <h2 class="section-title">Accessibility First</h2>
+      <p class="section-desc">MATA is built for the 285 million people worldwide with visual impairment. Accessibility is not a feature — it is the product.</p>
+    </div>
+    <div class="a11y-grid">
+      <div class="a11y-card vision">
+        <div class="a11y-card-icon">👁️</div>
+        <div class="a11y-card-title">Vision Accessibility</div>
+        <ul class="a11y-feature-list">
+          <li>Built-in screen reader (NarratorService) — no OS screen reader dependency</li>
+          <li>Every element has a descriptive Semantics label</li>
+          <li>Minimum font size: 16px; primary content: 24–40px</li>
+          <li>WCAG AA contrast ratios on all text-background pairs</li>
+          <li>High-contrast mode toggle (fully functional in new design)</li>
+          <li>No information conveyed by color alone (icons + text always paired)</li>
+          <li>Camera guidance audio: "Tilt left", "Move closer", "Hold still"</li>
+        </ul>
+      </div>
+      <div class="a11y-card audio">
+        <div class="a11y-card-icon">🔊</div>
+        <div class="a11y-card-title">Audio Accessibility</div>
+        <ul class="a11y-feature-list">
+          <li>All content narrated via TTS at adjustable speed (0.25×–2×)</li>
+          <li>Screen-by-screen context announcements on navigation</li>
+          <li>Earcons: distinct sounds for capture success, load complete, error</li>
+          <li>MARK bot voice Q&A — no text typing required ever</li>
+          <li>Wake word support: "Hey MARK" (phone shake as fallback)</li>
+          <li>Audio playback with voice commands: "pause", "repeat", "faster"</li>
+          <li>Braille display compatibility via accessibility services bridge</li>
+        </ul>
+      </div>
+      <div class="a11y-card motor">
+        <div class="a11y-card-icon">🤲</div>
+        <div class="a11y-card-title">Motor Accessibility</div>
+        <ul class="a11y-feature-list">
+          <li>Minimum touch target: 72px × 72px (exceeds 44px WCAG minimum)</li>
+          <li>Generous spacing between interactive elements (≥16px)</li>
+          <li>Hold-to-capture: 3-second steady hold triggers auto-capture</li>
+          <li>Voice-complete mode: zero touch needed after app is open</li>
+          <li>Switch Access / AssistiveTouch compatibility via Semantics</li>
+          <li>No time-limited interactions (no disappearing toasts without narration)</li>
+        </ul>
+      </div>
+      <div class="a11y-card cognitive">
+        <div class="a11y-card-icon">🧠</div>
+        <div class="a11y-card-title">Cognitive Accessibility</div>
+        <ul class="a11y-feature-list">
+          <li>One primary action per screen — no choice paralysis</li>
+          <li>Age-adaptive explanations: Child / Teen / Adult modes</li>
+          <li>Comprehension check after each explanation</li>
+          <li>If marked "Too Hard" → automatically simplifies language</li>
+          <li>Consistent navigation patterns across all screens</li>
+          <li>Plain language in all UI copy — no jargon</li>
+          <li>Tutorial mode on first launch with full narrated walkthrough</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ IMPLEMENTATION GUIDE ═══════════════════════ -->
+<div class="container">
+  <section>
+    <div class="section-header">
+      <div class="section-tag">Developer Guide</div>
+      <h2 class="section-title">How to Implement This Design</h2>
+      <p class="section-desc">A step-by-step Flutter implementation guide for bringing this design system to life in the MATA codebase.</p>
+    </div>
+    <div class="impl-steps">
+      <div class="impl-step">
+        <div class="impl-num">1</div>
+        <div class="impl-body">
+          <div class="impl-title">Create app_theme.dart — Design Tokens</div>
+          <p class="impl-desc">Extract all colors, typography, and spacing into a single source of truth. Never hardcode colors in widget files again.</p>
+          <div class="code-block">// lib/theme/app_theme.dart
+class AppColors {
+  static const bg0 = Color(0xFF060611);
+  static const bg1 = Color(0xFF0D0D1A);
+  static const primary = Color(0xFF7C3AED);
+  static const primaryLight = Color(0xFFA855F7);
+  static const accent = Color(0xFF06B6D4);
+  static const accent2 = Color(0xFF10B981);
+  static const danger = Color(0xFFEF4444);
+  static const textPrimary = Color(0xFFF8FAFC);
+  static const textSecondary = Color(0xFF94A3B8);
+
+  static const gradientPrimary = LinearGradient(
+    colors: [Color(0xFF7C3AED), Color(0xFFA855F7), Color(0xFF06B6D4)],
+    begin: Alignment.topLeft, end: Alignment.bottomRight,
+  );
+}</div>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="impl-num">2</div>
+        <div class="impl-body">
+          <div class="impl-title">Create glass_card.dart — Reusable Widget</div>
+          <p class="impl-desc">Replace every repeated BackdropFilter + Container pattern with a single reusable GlassCard widget.</p>
+          <div class="code-block">// lib/widgets/glass_card.dart
+class GlassCard extends StatelessWidget {
+  final Widget child;
+  final double blur;
+  final double opacity;
+  final BorderRadius? radius;
+
+  const GlassCard({required this.child, ...});
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: radius ?? BorderRadius.circular(24),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(opacity),
+            borderRadius: radius ?? BorderRadius.circular(24),
+            border: Border.all(color: Colors.white.withOpacity(0.08)),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}</div>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="impl-num">3</div>
+        <div class="impl-body">
+          <div class="impl-title">Upgrade NarratorService — Rich Audio Cues</div>
+          <p class="impl-desc">Add earcon sounds, queuing system, and voice command recognition to make the narrator truly first-class.</p>
+          <div class="code-block">// lib/services/narrator_service.dart
+class NarratorService {
+  // Add audio cue support
+  Future&lt;void&gt; playEarcon(Earcon type) async { ... }
+  // Add narration queue to prevent interruptions
+  final Queue&lt;String&gt; _queue = Queue();
+  // Add speed control
+  Future&lt;void&gt; setSpeed(double rate) async { ... }
+  // Enum for earcons
+  enum Earcon { success, error, navigate, capture, loading }
+}</div>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="impl-num">4</div>
+        <div class="impl-body">
+          <div class="impl-title">Implement Real History Screen</div>
+          <p class="impl-desc">Add GET /api/v1/sessions endpoint to backend, create SessionCard widget, add filter chips by subject, and enable replay via session_id.</p>
+          <div class="code-block">// Backend: main.py — add new endpoint
+@app.get("/api/v1/sessions")
+def get_sessions(user_id: str, db: Session = Depends(get_db)):
+    sessions = db.query(SessionLog)\
+        .order_by(SessionLog.timestamp.desc())\
+        .limit(20).all()
+    return {"sessions": [s.__dict__ for s in sessions]}</div>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="impl-num">5</div>
+        <div class="impl-body">
+          <div class="impl-title">Wire Settings with SharedPreferences</div>
+          <p class="impl-desc">Create a SettingsProvider using InheritedWidget or Provider package. All settings must persist and apply globally in real-time.</p>
+          <div class="code-block">// lib/providers/settings_provider.dart
+class SettingsProvider extends ChangeNotifier {
+  bool _highContrast = false;
+  double _textScale = 1.0;
+  double _ttsSpeed = 0.5;
+  String _defaultLevel = 'teen';
+
+  Future&lt;void&gt; loadFromPrefs() async { ... }
+  Future&lt;void&gt; setHighContrast(bool val) async {
+    _highContrast = val;
+    await _prefs.setBool('high_contrast', val);
+    notifyListeners(); // rebuilds entire app
+  }
+}</div>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="impl-num">6</div>
+        <div class="impl-body">
+          <div class="impl-title">Add Shake-to-Invoke MARK</div>
+          <p class="impl-desc">Use the sensors_plus package to detect shake gestures globally. Invoke MARK from any screen without needing to find the FAB.</p>
+          <div class="code-block">// In main.dart — wrap entire app
+class ShakeDetector extends StatefulWidget {
+  // Use accelerometerEvents stream
+  // Detect magnitude > threshold (2.7g)
+  // Debounce 1 second between invocations
+  // Call NarratorService + VoiceService globally
+}</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">MATA · MARK</div>
+    <p class="footer-text">UI/UX Design System 3.0 · Multimodal Accessible Textbook Assistant</p>
+    <p class="footer-text" style="margin-top:8px;">MIT Academy of Engineering, Alandi (D), Pune | Department of Computer Engineering | AY 2025–26</p>
+    <p class="footer-text" style="margin-top:8px;">Designed for 285 million visually impaired people worldwide. Every pixel has a purpose.</p>
+  </div>
+</footer>
+
+</body>
+</html>
